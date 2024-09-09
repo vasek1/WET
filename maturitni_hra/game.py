@@ -10,10 +10,10 @@ screen_height = 800
 screen_width =1200
 screen = pygame.display.set_mode((screen_width, screen_height))
 
-start_img = pygame.image.load("image/start_tlacitko.png")
-exit_img= pygame.image.load("image/exi_tlacitko.png")
-start_button = button.Button(100,200, start_img)
-exit_button = button.Button(450,200, exit_img)
+start_img = pygame.image.load("image/menu/start_tlacitko.png")
+exit_img= pygame.image.load("image/menu/exit_tlacitko.png")
+start_button = button.Button(400,300, start_img)
+exit_button = button.Button(100,600, exit_img)
 
 while True:
 
