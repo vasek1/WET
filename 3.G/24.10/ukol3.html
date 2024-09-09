@@ -1,0 +1,29 @@
+<html lang="cs">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Prezenčka</title>
+        <style>
+            html {
+                font-family: monospace;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div>Prezenčka:</div>
+        <ul id="seznam"></ul>
+
+        <script>
+            const seznam = document.getElementById("seznam")
+
+            let odpoved = window.prompt("Kolik kamenů je přítomno??")
+
+        for (let i = 0; i < odpoved; i++) {
+            let seznamItem = document.createElement("li");
+            seznamItem.textContent = "kámen";
+            seznam.appendChild(seznamItem);
+        }
+        </script>
+    </body>
+</html>

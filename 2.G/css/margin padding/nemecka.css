@@ -1,0 +1,26 @@
+.black{
+    background-color: black;
+   
+ margin-top: 300px;
+    width: 500px;
+    height: 100px;
+
+
+}
+.red{
+    background-color:red;
+
+   
+    width: 500px;
+    height: 100px;
+}
+.yellow{
+    background-color:yellow;
+    
+
+    width: 500px;
+    height: 100px;
+}
+.vlajka{
+    margin-left: 300px; 
+}
