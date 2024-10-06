@@ -1,6 +1,7 @@
 import pygame
 from sys import exit
 import button
+from player import Player
 
 clock = pygame.time.Clock()
 pygame.init()
@@ -18,6 +19,11 @@ tutorial_image = pygame.image.load("image/tutorial/skip_tlacitko.png")
 tutorial_button = button.Button(700,690, tutorial_image, 5)
 start_button = button.Button(416,200, start_image, 8)
 exit_button = button.Button(416,500, exit_image, 8)
+
+
+player = pygame.sprite.GroupSingle()
+player.add(Player()) 
+
 start= True
 Tutorial = False
 Game_go = False
@@ -44,6 +50,9 @@ while True:
             tutorial_button.draw()
         if tutorial_button.click(event):
              Game_go = True
+             tutorial = False
         if Game_go:
-             screen.blit(background,(0,0))
+             screen.fill((34,139,34))
+             player.update()
+             player.draw(screen)
         pygame.display.update()
