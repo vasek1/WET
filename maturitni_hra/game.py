@@ -39,13 +39,13 @@ while True:
         start_button.draw()
         exit_button.draw()
         
-
+    
         if start_button.click(event):
-            Tutorial = True
-            
-        if exit_button.click(event):
-                start = False
+            Tutorial = True  
+        if not Tutorial:
+            if exit_button.click(event):
                 exit()
+               
         if Tutorial:
             screen.blit(tutorial_text,(0,0))
             tutorial_button.draw()

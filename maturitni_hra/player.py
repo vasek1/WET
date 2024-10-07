@@ -7,7 +7,7 @@ class Player(pygame.sprite.Sprite):
         self.x = 100
         self.y = 200
         self.spritesheet = pygame.image.load("image/entities/Player.png").convert_alpha()
-        self.image = get_image(self.spritesheet, 0, 0, 31, 31, 10) 
+        self.image = get_image(self.spritesheet, 0, 0, 32, 31, 10) 
         self.speed = 10
         self.index = 0
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
@@ -21,7 +21,7 @@ class Player(pygame.sprite.Sprite):
         if self.index >= frame_count:
             self.index = 0
 
-        self.image = get_image(self.spritesheet, int(self.index), direction, 31,31,10)
+        self.image = get_image(self.spritesheet, int(self.index), direction, 32,31,10)
 
         
     def update(self):
