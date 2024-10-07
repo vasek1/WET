@@ -8,15 +8,16 @@ class Player(pygame.sprite.Sprite):
         self.y = 200
         self.spritesheet = pygame.image.load("image/entities/Player.png").convert_alpha()
         self.image = get_image(self.spritesheet, 0, 0, 31, 31, 10) 
-        self.speed = 20
+        self.speed = 10
         self.index = 0
-        self.rect = self.image.get_rect(midbottom=(self.x, self.y))
+        self.rect = self.image.get_rect(topleft=(self.x, self.y))
         
        
     def animation(self, direction):
         frame_count = 6
 
-        self.index += 0.2
+
+        self.index += 0.3
         if self.index >= frame_count:
             self.index = 0
 
@@ -40,6 +41,7 @@ class Player(pygame.sprite.Sprite):
         if key[pygame.K_s]:
             dy += self.speed
             self.animation(3)
+
         self.rect.x += dx
         self.rect.y += dy
 
