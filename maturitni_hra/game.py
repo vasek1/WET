@@ -1,4 +1,5 @@
 import pygame
+from random import randint
 from sys import exit
 import button
 from player import Player
