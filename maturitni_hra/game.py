@@ -3,14 +3,17 @@ from random import randint
 from sys import exit
 import button
 from player import Player
+from settings import *
+from map import Map
+
+import pytmx
 
 clock = pygame.time.Clock()
 pygame.init()
 
 background = pygame.image.load("image/menu/start_background.png")
 tutorial_text = pygame.image.load("image/tutorial/tutorial.png")
-screen_height = 800
-screen_width =1200
+
 screen = pygame.display.set_mode((screen_width, screen_height))
 
 
@@ -21,6 +24,8 @@ tutorial_button = button.Button(700,690, tutorial_image, 5)
 start_button = button.Button(450,250, start_image, 7)
 exit_button = button.Button(470,450, exit_image, 6)
 
+level_data = "image/map/mapa.tmx"
+mapa = Map(screen,level_data)
 
 player = pygame.sprite.GroupSingle()
 player.add(Player()) 
@@ -52,10 +57,11 @@ while True:
             tutorial_button.draw()
         if tutorial_button.click(event):
              Game_go = True
-             tutorial = False
+             Tutorial = False
         if Game_go:
-             screen.fill((34,139,34))
+             mapa.draw_background()
              player.update()
              player.draw(screen)
-        pygame.display.update()
+             
+    pygame.display.update()
     clock.tick(60)
