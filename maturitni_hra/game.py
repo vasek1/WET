@@ -5,7 +5,7 @@ import button
 from player import Player
 from settings import *
 from map import Map
-
+from camera import Camera
 import pytmx
 
 clock = pygame.time.Clock()
@@ -26,6 +26,8 @@ exit_button = button.Button(470,450, exit_image, 6)
 
 level_data = "image/map/mapa.tmx"
 mapa = Map(screen,level_data)
+
+
 
 player = pygame.sprite.GroupSingle()
 player.add(Player()) 
@@ -62,6 +64,8 @@ while True:
              mapa.draw_background()
              player.update()
              player.draw(screen)
-             
+            # camera.update()
+             #camera.custom_draw(screen)
+            
     pygame.display.update()
-    clock.tick(60)
+    clock.tick(60) 
