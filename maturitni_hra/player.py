@@ -1,5 +1,6 @@
 import pygame
 from getimg import get_image 
+from bar import bar
 
 class Player(pygame.sprite.Sprite):
     def __init__(self):
