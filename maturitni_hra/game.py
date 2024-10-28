@@ -42,11 +42,14 @@ water_bar = bar(1135,25,60,5,0,100,0,0)
 food_bar = bar(1135,40,60,5,100,0,0,0)
 temperature_bar = bar(1135,55,60,5,0,0,0,100)
 
-player = pygame.sprite.GroupSingle()
-player.add(Player()) 
+#player = pygame.sprite.GroupSingle()
+#player.add(Player()) 
+camera_group = Camera(screen)
+player = Player((640,360),camera_group)
+camera_group.add(player)
 
 elapsed_time_day = 0
-day = 1
+day = 0
 start= True
 Tutorial = False
 Game_go = False
@@ -61,7 +64,7 @@ while True:
     if start == True:  
         start_button.draw(screen)
         exit_button.draw(screen)
-        
+
         if start_button.click(event):
             Tutorial = True
             start = False  
@@ -89,38 +92,34 @@ while True:
         if day == 10:
             game_over = True   
             Game_go = False
-        print(day)
+        
+        camera_group.center_target_camera(player)
+        camera_group.update()
         mapa.draw_background()
         player.update()
         player.draw(screen)
-
-
         #lišta v rohu
         screen.blit(under_bar,(1100,0))
+        screen.blit(health,(1120,8))
+        screen.blit(food,(1120,38))
+        screen.blit(water,(1120,23))
+        screen.blit(tmp,(1120,53))
+
         text1 = font1.render(f"Day: {day}", False, "#000000")
-        screen.blit(text1, (1120, 67))
         text2 = font1.render(f"Wood: {0}", False, "#000000")
+        screen.blit(text1, (1120, 67))
         screen.blit(text2, (1155, 67))
 
         health_bar.draw_Healthbar(screen)
-        screen.blit(health,(1120,8))
         food_bar.draw_Foodbar(screen)
-        screen.blit(food,(1120,38))
         water_bar.draw_Waterbar(screen)
-        screen.blit(water,(1120,23))
         temperature_bar.draw_Temperaturebar(screen)
-        screen.blit(tmp,(1120,53))
-
-        health_bar.hp = 30
+        
+        health_bar.hp = 60
         food_bar.fd = 50
-        water_bar.wt = 5
+        water_bar.wt = 70
         temperature_bar.tp = 70
-            # camera.update()
-             #camera.custom_draw(screen)
-       
-        
-        
-        
+            
         if health_bar.hp <= 0:
          game_over =True
          Game_go = False
@@ -137,8 +136,8 @@ while True:
             game_over = False
             Tutorial = False
             Game_go = False
-            day = 1
+            day = 0
             elapsed_time_day = 0
-            print("Game reset!")
+           
     pygame.display.update() 
     clock.tick(60) 

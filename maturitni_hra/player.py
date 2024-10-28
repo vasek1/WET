@@ -3,7 +3,7 @@ from getimg import get_image
 from bar import bar
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self):
+    def __init__(self,pos,camera_group):
         super().__init__() 
         self.x = 100
         self.y = 200
@@ -11,8 +11,8 @@ class Player(pygame.sprite.Sprite):
         self.image = get_image(self.spritesheet, 0, 0, 32, 31, 1) 
         self.speed = 1
         self.index = 0
-        self.rect = self.image.get_rect(topleft=(self.x, self.y))
-        
+        self.rect = self.image.get_rect(center = pos)
+        self.camera_group = camera_group
        
     def animation(self, direction):
         frame_count = 6
