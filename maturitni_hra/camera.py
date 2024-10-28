@@ -18,4 +18,4 @@ def custom_draw(self):
       
       for sprite in sorted(self.sprites(), key=lambda sprite: sprite.rect.centery):
             offset_pos = sprite.rect.topleft - self.offset
-            self.display_surface.blit(sprite.image, offset_pos)
+            self.display_surface.blit(sprite.image, offset_pos)   

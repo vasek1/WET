@@ -1,7 +1,7 @@
 import pygame
 
 class bar():
-    def __init__(self,x,y,w,h,max_fd,max_wt,max_hp):
+    def __init__(self,x,y,w,h,max_fd,max_wt,max_hp,max_tp):
         self.x = x
         self.y = y
         self.w = w
@@ -12,6 +12,8 @@ class bar():
         self.max_wt = max_wt
         self.hp = max_hp
         self.max_hp = max_hp
+        self.tp = max_tp
+        self.max_tp = max_tp
     def draw_Healthbar (self,surface):
         ratio = self.hp/ self.max_hp
         red =(139, 0, 0)
@@ -29,3 +31,9 @@ class bar():
         red =(139, 0, 0)
         pygame.draw.rect(surface,red, (self.x,self.y,self.w,self.h,))
         pygame.draw.rect(surface,brown, (self.x,self.y,self.w*ratio,self.h,))
+    def draw_Temperaturebar (self,surface):
+        ratio = self.tp/ self.max_tp
+        blue = (106, 90, 205)
+        red =(220, 60, 50)
+        pygame.draw.rect(surface,blue, (self.x,self.y,self.w,self.h,))
+        pygame.draw.rect(surface,red, (self.x,self.y,self.w*ratio,self.h,))

@@ -9,7 +9,7 @@ class Player(pygame.sprite.Sprite):
         self.y = 200
         self.spritesheet = pygame.image.load("image/entities/Player.png").convert_alpha()
         self.image = get_image(self.spritesheet, 0, 0, 32, 31, 1) 
-        self.speed = 2
+        self.speed = 1
         self.index = 0
         self.rect = self.image.get_rect(topleft=(self.x, self.y))
         
@@ -28,24 +28,27 @@ class Player(pygame.sprite.Sprite):
     def update(self):
         dx = 0
         dy = 0
-
+        
+        #muzu vymenit i za normalni if ale pak se bude panacek zrychlovat kdyz pujde diagonalne
         key = pygame.key.get_pressed()
         if key[pygame.K_a]:
             dx -= self.speed
             self.animation(2)
-        if key[pygame.K_d]:
+        elif key[pygame.K_d]:
             dx += self.speed
             self.animation(4)
-        if key[pygame.K_w]:
+        elif key[pygame.K_w]:
             dy -= self.speed
             self.animation(5)
-        if key[pygame.K_s]:
+        elif key[pygame.K_s]:
             dy += self.speed
             self.animation(3)
-       
-        self.rect.x += dx
-        self.rect.y += dy
+        
+            
 
+        self.rect.x += dx 
+        self.rect.y += dy 
+      
 
     def draw(self, screen):
         screen.blit(self.image, self.rect)
