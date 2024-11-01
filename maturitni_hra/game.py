@@ -7,7 +7,7 @@ from settings import *
 from map import Map
 from camera import Camera
 from bar import bar
-import time
+
 
 
 
@@ -93,9 +93,7 @@ while True:
             game_over = True   
             Game_go = False
         
-        camera_group.center_target_camera(player)
-        camera_group.update()
-        mapa.draw_background()
+        mapa.draw_background(camera_group.center_target_camera(player))
         player.update()
         player.draw(screen)
         #lišta v rohu
