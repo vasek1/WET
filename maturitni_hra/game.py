@@ -45,7 +45,7 @@ temperature_bar = bar(1135,55,60,5,0,0,0,100)
 #player = pygame.sprite.GroupSingle()
 #player.add(Player()) 
 camera_group = Camera(screen)
-player = Player((640,360),camera_group)
+player = Player((600,750),camera_group)
 camera_group.add(player)
 
 elapsed_time_day = 0
@@ -84,8 +84,8 @@ while True:
 
     elif Game_go == True: 
         
-        elapsed_time_day = pygame.time.get_ticks()  / 1000 #600 000 nastavení dne na 10 minut
-
+        elapsed_time_day = pygame.time.get_ticks()  / 600000 #600 000 nastavení dne na 10 minut
+        
         if elapsed_time_day >=  10*day:
             day += 1
             elapsed_time_day = 0
@@ -93,9 +93,11 @@ while True:
             game_over = True   
             Game_go = False
         
+        
         mapa.draw_background(camera_group.center_target_camera(player))
-        player.update()
+        
         player.draw(screen)
+        player.update()
         #lišta v rohu
         screen.blit(under_bar,(1100,0))
         screen.blit(health,(1120,8))
@@ -113,11 +115,21 @@ while True:
         water_bar.draw_Waterbar(screen)
         temperature_bar.draw_Temperaturebar(screen)
         
-        health_bar.hp = 60
-        food_bar.fd = 50
-        water_bar.wt = 70
-        temperature_bar.tp = 70
+        health_bar.hp = 100
+        food_bar.fd = 70
+        temperature_bar.tp = 50
+
+        elapsed_time = pygame.time.get_ticks()  
+        if elapsed_time >= 10000:
+             water_bar.wt -= 50
             
+        #dořešit aby se ubýralo jídlo a pití
+        #dořešit aby když se dotkne jezera tak se voda načte na 100% a zůstane tak
+        see1 = pygame.Rect(400, 571, 39, 34)
+        pygame.draw.rect(screen,(255,255,255),see1)
+        if player.rect.colliderect(see1):
+            water_bar.wt = 60
+               
         if health_bar.hp <= 0:
          game_over =True
          Game_go = False

@@ -1,6 +1,8 @@
 import pygame
 from getimg import get_image 
-from bar import bar
+from bar import *
+from settings import *
+
 
 class Player(pygame.sprite.Sprite):
     def __init__(self,pos,camera_group):
@@ -13,7 +15,7 @@ class Player(pygame.sprite.Sprite):
         self.index = 0
         self.rect = self.image.get_rect(center = pos)
         self.camera_group = camera_group
-       
+        
     def animation(self, direction):
         frame_count = 6
 
@@ -43,13 +45,25 @@ class Player(pygame.sprite.Sprite):
         elif key[pygame.K_s]:
             dy += self.speed
             self.animation(3)
+
+        see1 = pygame.Rect(400, 571, 39, 34)
         
-            
+
+        #print(self.rect.x,self.rect.y)
+        if self.rect.x < 319:
+            self.rect.x = 319 + 1
+        elif self.rect.x > 830:
+            self.rect.x = 830 - 1
+        
+        if self.rect.y < 210:
+            self.rect.y = 210 + 1
+        elif self.rect.y > 744:
+            self.rect.y = 744 -1
 
         self.rect.x += dx 
         self.rect.y += dy 
-      
-
+        
+        #print(self.rect.x,self.rect.y)
     def draw(self, screen):
         screen.blit(self.image, self.rect)
         

@@ -18,8 +18,8 @@ class Map:
                 self.background.blit(
                     image,
                     (
-                        (x * self.data.tilewidth) - offset[0],
-                        (y * self.data.tileheight) - offset[1],
+                        (x * self.data.tilewidth) - offset[0] ,
+                        (y * self.data.tileheight) - offset[1] ,
                     ),
                 )
         self.screen.blit(self.background, (0, 0))
