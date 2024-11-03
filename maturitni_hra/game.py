@@ -48,6 +48,10 @@ camera_group = Camera(screen)
 player = Player((600,750),camera_group)
 camera_group.add(player)
 
+decrease_hp= pygame.time.get_ticks()
+decrease_fd_wt= pygame.time.get_ticks()
+increase_hp= pygame.time.get_ticks()
+elapsed_time = 0
 elapsed_time_day = 0
 day = 0
 start= True
@@ -84,18 +88,10 @@ while True:
 
     elif Game_go == True: 
         
-        elapsed_time_day = pygame.time.get_ticks()  / 600000 #600 000 nastavení dne na 10 minut
         
-        if elapsed_time_day >=  10*day:
-            day += 1
-            elapsed_time_day = 0
-        if day == 10:
-            game_over = True   
-            Game_go = False
         
         
         mapa.draw_background(camera_group.center_target_camera(player))
-        
         player.draw(screen)
         player.update()
         #lišta v rohu
@@ -115,21 +111,42 @@ while True:
         water_bar.draw_Waterbar(screen)
         temperature_bar.draw_Temperaturebar(screen)
         
-        health_bar.hp = 100
-        food_bar.fd = 70
+       
+        
         temperature_bar.tp = 50
+        
+        elapsed_time = pygame.time.get_ticks()
+        elapsed_time_day = pygame.time.get_ticks()  / 600000 #600 000 nastavení dne na 10 minut
+        
+        # počítání dnů
+        if elapsed_time_day >=  10*day:
+            day += 1
+            elapsed_time_day = 0
+        if day == 10:
+            game_over = True   
+            Game_go = False
+        #ubírání jídla a pití každých 10 vteřin
+        if elapsed_time - decrease_fd_wt > 10000:
+            water_bar.wt -= 50 
+            food_bar.fd -= 1                  
+            decrease_fd_wt = elapsed_time
+        
+        if food_bar.fd == 0 or water_bar.wt == 0:
+          if health_bar.hp > 0 and elapsed_time - decrease_hp > 1000:
+                health_bar.hp -= 10
+                decrease_hp = elapsed_time
 
-        elapsed_time = pygame.time.get_ticks()  
-        if elapsed_time >= 10000:
-             water_bar.wt -= 50
-            
-        #dořešit aby se ubýralo jídlo a pití
+        if water_bar.wt > 75: #dořešit aby se to dělo když bude jídlo s pitím aspon nad 75 
+           if health_bar.hp < 100 and elapsed_time - increase_hp > 1000:
+                 health_bar.hp += 5    
+                 increase_hp = elapsed_time
+        
         #dořešit aby když se dotkne jezera tak se voda načte na 100% a zůstane tak
         see1 = pygame.Rect(400, 571, 39, 34)
         pygame.draw.rect(screen,(255,255,255),see1)
         if player.rect.colliderect(see1):
-            water_bar.wt = 60
-               
+            water_bar.wt = 100
+            
         if health_bar.hp <= 0:
          game_over =True
          Game_go = False
