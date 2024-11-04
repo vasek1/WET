@@ -1,42 +1,71 @@
 import pygame
+from random import randint
 from sys import exit
 import button
+from player import Player
+from settings import *
+from map import Map
+from camera import Camera
+import pytmx
 
 clock = pygame.time.Clock()
 pygame.init()
 
-background = pygame.image.load("image/menu/background_menu.png")
-tutorial_text = pygame.image.load("image/tutorial_s_napisem.png")
-screen_height = 800
-screen_width =1200
+background = pygame.image.load("image/menu/start_background.png")
+tutorial_text = pygame.image.load("image/tutorial/tutorial.png")
+
 screen = pygame.display.set_mode((screen_width, screen_height))
 
 
 start_image = pygame.image.load("image/menu/start_tlacitko.png")
 exit_image= pygame.image.load("image/menu/exit_tlacitko.png")
-start_button = button.Button(416,200, start_image, 8)
-exit_button = button.Button(416,500, exit_image, 8)
-bezi = True
+tutorial_image = pygame.image.load("image/tutorial/skip_tlacitko.png")
+tutorial_button = button.Button(700,690, tutorial_image, 5)
+start_button = button.Button(450,250, start_image, 7)
+exit_button = button.Button(470,450, exit_image, 6)
+
+level_data = "image/map/mapa.tmx"
+mapa = Map(screen,level_data)
+
+
+
+player = pygame.sprite.GroupSingle()
+player.add(Player()) 
+
+start= True
 Tutorial = False
+Game_go = False
 while True:
 
     for event in pygame.event.get():
      
         if event.type == pygame.QUIT:
             pygame.quit()
-            exit()
+            
+       
         screen.blit(background,(0,0))
         start_button.draw()
         exit_button.draw()
-
+        
+    
         if start_button.click(event):
-            Tutorial = True
-            
-        if exit_button.click(event):
-                bezi = False
+            Tutorial = True  
+        if not Tutorial:
+            if exit_button.click(event):
                 exit()
+               
         if Tutorial:
             screen.blit(tutorial_text,(0,0))
-
-    
-        pygame.display.update()
+            tutorial_button.draw()
+        if tutorial_button.click(event):
+             Game_go = True
+             Tutorial = False
+        if Game_go:
+             mapa.draw_background()
+             player.update()
+             player.draw(screen)
+            # camera.update()
+             #camera.custom_draw(screen)
+            
+    pygame.display.update()
+    clock.tick(60) 
