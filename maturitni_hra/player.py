@@ -25,7 +25,15 @@ class Player(pygame.sprite.Sprite):
             self.index = 0
 
         self.image = get_image(self.spritesheet, int(self.index), direction, 32,31,1)
+    def animation2(self, direction):
+        frame_count = 4
 
+
+        self.index += 0.3
+        if self.index >= frame_count:
+            self.index = 0
+
+        self.image = get_image(self.spritesheet, int(self.index), direction, 32,32,1)
         
     def update(self):
         dx = 0
@@ -45,7 +53,8 @@ class Player(pygame.sprite.Sprite):
         elif key[pygame.K_s]:
             dy += self.speed
             self.animation(3)
-
+        elif key[pygame.K_k]:
+            self.animation2(6)
         see1 = pygame.Rect(400, 571, 39, 34)
         
 

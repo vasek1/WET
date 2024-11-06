@@ -7,8 +7,7 @@ from settings import *
 from map import Map
 from camera import Camera
 from bar import bar
-
-
+from animal import Animal
 
 
 pygame.init()
@@ -34,9 +33,11 @@ level_data = ("image/map/mapa.tmx")
 tutorial_button = button.Button(700,690, tutorial_image,width1=46,height1=22,scale= 5)
 start_button = button.Button(450,250, start_image,width1=46,height1=22,scale=  7)
 exit_button = button.Button(470,450, exit_image, width1=46,height1=22,scale= 6)
+exit2_button = button.Button(510,450, exit_image, width1=46,height1=22,scale= 5)
 play_again_button = button.Button(400,600,play_again_image,width1=92,height1=22,scale= 5)
 
 mapa = Map(screen,level_data)
+
 health_bar = bar(1135,10,60,5,0,0,100,0)
 water_bar = bar(1135,25,60,5,0,100,0,0)
 food_bar = bar(1135,40,60,5,100,0,0,0)
@@ -47,6 +48,7 @@ temperature_bar = bar(1135,55,60,5,0,0,0,100)
 camera_group = Camera(screen)
 player = Player((600,750),camera_group)
 camera_group.add(player)
+animal = Animal((800,750))
 
 decrease_hp= pygame.time.get_ticks()
 decrease_fd_wt= pygame.time.get_ticks()
@@ -58,6 +60,9 @@ start= True
 Tutorial = False
 Game_go = False
 game_over = False
+
+
+
 while True:
 
     for event in pygame.event.get():
@@ -94,6 +99,8 @@ while True:
         mapa.draw_background(camera_group.center_target_camera(player))
         player.draw(screen)
         player.update()
+        animal.update()
+        animal.draw(screen)
         #lišta v rohu
         screen.blit(under_bar,(1100,0))
         screen.blit(health,(1120,8))
@@ -127,7 +134,7 @@ while True:
             Game_go = False
         #ubírání jídla a pití každých 10 vteřin
         if elapsed_time - decrease_fd_wt > 10000:
-            water_bar.wt -= 50 
+            water_bar.wt -= 50
             food_bar.fd -= 1                  
             decrease_fd_wt = elapsed_time
         
@@ -141,8 +148,8 @@ while True:
                  health_bar.hp += 5    
                  increase_hp = elapsed_time
         
-        #dořešit aby když se dotkne jezera tak se voda načte na 100% a zůstane tak
-        see1 = pygame.Rect(400, 571, 39, 34)
+        #dořešit aby jezero bylo na sparavné pozici a taky aby
+        see1 = pygame.Rect(400, 571, 80, 60)
         pygame.draw.rect(screen,(255,255,255),see1)
         if player.rect.colliderect(see1):
             water_bar.wt = 100
@@ -157,14 +164,21 @@ while True:
         over = font2.render(f"YOU LOSE", False, "#ff0000")
         screen.blit(text3, (485,400))
         screen.blit(over, (450,310))
-        play_again_button.draw(screen) 
+        play_again_button.draw(screen)
+        exit2_button.draw(screen) 
         if play_again_button.click(event):
             start = True
             game_over = False
             Tutorial = False
             Game_go = False
+            health_bar.hp = 100
+            water_bar.wt = 100
             day = 0
             elapsed_time_day = 0
-           
+            player.rect.x = 600
+            player.rect.y = 750
+        elif exit2_button.click(event):
+            pygame.quit()
+
     pygame.display.update() 
     clock.tick(60) 
