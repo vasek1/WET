@@ -120,7 +120,7 @@ while True:
         
        
         
-        temperature_bar.tp = 50
+        
         
         elapsed_time = pygame.time.get_ticks()
         elapsed_time_day = pygame.time.get_ticks()  / 600000 #600 000 nastavení dne na 10 minut
@@ -160,8 +160,8 @@ while True:
        
     if game_over == True :
         screen.blit(background, (0, 0))
-        text3 = font3.render(f"Days Survived: {day}", False,  "#ff0000")
-        over = font2.render(f"YOU LOSE", False, "#ff0000")
+        text3 = font3.render(f"Days Survived: {day}", False,  "#000000")
+        over = font2.render(f"YOU LOSE", False, "#000000")
         screen.blit(text3, (485,400))
         screen.blit(over, (450,310))
         play_again_button.draw(screen)
