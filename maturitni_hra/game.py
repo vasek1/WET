@@ -6,66 +6,165 @@ from player import Player
 from settings import *
 from map import Map
 from camera import Camera
-import pytmx
+from bar import bar
 
-clock = pygame.time.Clock()
+
+
+
 pygame.init()
+font1 = pygame.font.Font(None, 15)
+font2 = pygame.font.Font(None, 100)
+font3 = pygame.font.Font(None, 50)
+screen = pygame.display.set_mode((screen_width, screen_height))
+clock = pygame.time.Clock()
 
 background = pygame.image.load("image/menu/start_background.png")
 tutorial_text = pygame.image.load("image/tutorial/tutorial.png")
-
-screen = pygame.display.set_mode((screen_width, screen_height))
-
-
+under_bar= pygame.image.load("image/bars/under_bars.png")
+health= pygame.image.load("image/bars/health.png")
+water = pygame.image.load("image/bars/water.png")
+food= pygame.image.load("image/bars/food.png")
+tmp= pygame.image.load("image/bars/tmp.png")
 start_image = pygame.image.load("image/menu/start_tlacitko.png")
 exit_image= pygame.image.load("image/menu/exit_tlacitko.png")
+play_again_image = pygame.image.load("image/gameover/play_again.png")
 tutorial_image = pygame.image.load("image/tutorial/skip_tlacitko.png")
-tutorial_button = button.Button(700,690, tutorial_image, 5)
-start_button = button.Button(450,250, start_image, 7)
-exit_button = button.Button(470,450, exit_image, 6)
+level_data = ("image/map/mapa.tmx")
 
-level_data = "image/map/mapa.tmx"
+tutorial_button = button.Button(700,690, tutorial_image,width1=46,height1=22,scale= 5)
+start_button = button.Button(450,250, start_image,width1=46,height1=22,scale=  7)
+exit_button = button.Button(470,450, exit_image, width1=46,height1=22,scale= 6)
+play_again_button = button.Button(400,600,play_again_image,width1=92,height1=22,scale= 5)
+
 mapa = Map(screen,level_data)
+health_bar = bar(1135,10,60,5,0,0,100,0)
+water_bar = bar(1135,25,60,5,0,100,0,0)
+food_bar = bar(1135,40,60,5,100,0,0,0)
+temperature_bar = bar(1135,55,60,5,0,0,0,100)
 
+#player = pygame.sprite.GroupSingle()
+#player.add(Player()) 
+camera_group = Camera(screen)
+player = Player((600,750),camera_group)
+camera_group.add(player)
 
-
-player = pygame.sprite.GroupSingle()
-player.add(Player()) 
-
+decrease_hp= pygame.time.get_ticks()
+decrease_fd_wt= pygame.time.get_ticks()
+increase_hp= pygame.time.get_ticks()
+elapsed_time = 0
+elapsed_time_day = 0
+day = 0
 start= True
 Tutorial = False
 Game_go = False
+game_over = False
 while True:
 
     for event in pygame.event.get():
      
         if event.type == pygame.QUIT:
+            pygame.quit()    
+        screen.blit(background, (0, 0))
+    if start == True:  
+        start_button.draw(screen)
+        exit_button.draw(screen)
+
+        if start_button.click(event):
+            Tutorial = True
+            start = False  
+        
+        if exit_button.click(event):
             pygame.quit()
             
-       
-        screen.blit(background,(0,0))
-        start_button.draw()
-        exit_button.draw()
-        
-    
-        if start_button.click(event):
-            Tutorial = True  
-        if not Tutorial:
-            if exit_button.click(event):
-                exit()
-               
-        if Tutorial:
-            screen.blit(tutorial_text,(0,0))
-            tutorial_button.draw()
+
+    elif Tutorial == True:  
+        screen.blit(tutorial_text, (0, 0))
+        tutorial_button.draw(screen)
+        game_over = False
         if tutorial_button.click(event):
-             Game_go = True
-             Tutorial = False
-        if Game_go:
-             mapa.draw_background()
-             player.update()
-             player.draw(screen)
-            # camera.update()
-             #camera.custom_draw(screen)
             
-    pygame.display.update()
+            Game_go = True
+            Tutorial = False  
+
+    elif Game_go == True: 
+        
+        
+        
+        
+        mapa.draw_background(camera_group.center_target_camera(player))
+        player.draw(screen)
+        player.update()
+        #lišta v rohu
+        screen.blit(under_bar,(1100,0))
+        screen.blit(health,(1120,8))
+        screen.blit(food,(1120,38))
+        screen.blit(water,(1120,23))
+        screen.blit(tmp,(1120,53))
+
+        text1 = font1.render(f"Day: {day}", False, "#000000")
+        text2 = font1.render(f"Wood: {0}", False, "#000000")
+        screen.blit(text1, (1120, 67))
+        screen.blit(text2, (1155, 67))
+
+        health_bar.draw_Healthbar(screen)
+        food_bar.draw_Foodbar(screen)
+        water_bar.draw_Waterbar(screen)
+        temperature_bar.draw_Temperaturebar(screen)
+        
+       
+        
+        temperature_bar.tp = 50
+        
+        elapsed_time = pygame.time.get_ticks()
+        elapsed_time_day = pygame.time.get_ticks()  / 600000 #600 000 nastavení dne na 10 minut
+        
+        # počítání dnů
+        if elapsed_time_day >=  10*day:
+            day += 1
+            elapsed_time_day = 0
+        if day == 10:
+            game_over = True   
+            Game_go = False
+        #ubírání jídla a pití každých 10 vteřin
+        if elapsed_time - decrease_fd_wt > 10000:
+            water_bar.wt -= 50 
+            food_bar.fd -= 1                  
+            decrease_fd_wt = elapsed_time
+        
+        if food_bar.fd == 0 or water_bar.wt == 0:
+          if health_bar.hp > 0 and elapsed_time - decrease_hp > 1000:
+                health_bar.hp -= 10
+                decrease_hp = elapsed_time
+
+        if water_bar.wt > 75: #dořešit aby se to dělo když bude jídlo s pitím aspon nad 75 
+           if health_bar.hp < 100 and elapsed_time - increase_hp > 1000:
+                 health_bar.hp += 5    
+                 increase_hp = elapsed_time
+        
+        #dořešit aby když se dotkne jezera tak se voda načte na 100% a zůstane tak
+        see1 = pygame.Rect(400, 571, 39, 34)
+        pygame.draw.rect(screen,(255,255,255),see1)
+        if player.rect.colliderect(see1):
+            water_bar.wt = 100
+            
+        if health_bar.hp <= 0:
+         game_over =True
+         Game_go = False
+       
+    if game_over == True :
+        screen.blit(background, (0, 0))
+        text3 = font3.render(f"Days Survived: {day}", False,  "#ff0000")
+        over = font2.render(f"YOU LOSE", False, "#ff0000")
+        screen.blit(text3, (485,400))
+        screen.blit(over, (450,310))
+        play_again_button.draw(screen) 
+        if play_again_button.click(event):
+            start = True
+            game_over = False
+            Tutorial = False
+            Game_go = False
+            day = 0
+            elapsed_time_day = 0
+           
+    pygame.display.update() 
     clock.tick(60) 
