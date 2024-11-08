@@ -55,10 +55,9 @@ class Player(pygame.sprite.Sprite):
             self.animation(3)
         elif key[pygame.K_k]:
             self.animation2(6)
-        see1 = pygame.Rect(400, 571, 39, 34)
-        
 
-        #print(self.rect.x,self.rect.y)
+      
+        
         if self.rect.x < 319:
             self.rect.x = 319 + 1
         elif self.rect.x > 830:
@@ -72,7 +71,6 @@ class Player(pygame.sprite.Sprite):
         self.rect.x += dx 
         self.rect.y += dy 
         
-        #print(self.rect.x,self.rect.y)
     def draw(self, screen):
         screen.blit(self.image, self.rect)
         

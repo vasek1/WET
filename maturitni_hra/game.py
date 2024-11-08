@@ -28,6 +28,7 @@ start_image = pygame.image.load("image/menu/start_tlacitko.png")
 exit_image= pygame.image.load("image/menu/exit_tlacitko.png")
 play_again_image = pygame.image.load("image/gameover/play_again.png")
 tutorial_image = pygame.image.load("image/tutorial/skip_tlacitko.png")
+see_image = pygame.image.load("image/sees/see1.png").convert_alpha()
 level_data = ("image/map/mapa.tmx")
 
 tutorial_button = button.Button(700,690, tutorial_image,width1=46,height1=22,scale= 5)
@@ -36,6 +37,10 @@ exit_button = button.Button(470,450, exit_image, width1=46,height1=22,scale= 6)
 exit2_button = button.Button(510,450, exit_image, width1=46,height1=22,scale= 5)
 play_again_button = button.Button(400,600,play_again_image,width1=92,height1=22,scale= 5)
 
+see1 = pygame.Rect(238, 715, 70, 60)
+see2 = pygame.Rect(898, 155, 100, 110)
+see3 = pygame.Rect(870, 175, 160, 55)  
+
 mapa = Map(screen,level_data)
 
 health_bar = bar(1135,10,60,5,0,0,100,0)
@@ -43,8 +48,7 @@ water_bar = bar(1135,25,60,5,0,100,0,0)
 food_bar = bar(1135,40,60,5,100,0,0,0)
 temperature_bar = bar(1135,55,60,5,0,0,0,100)
 
-#player = pygame.sprite.GroupSingle()
-#player.add(Player()) 
+
 camera_group = Camera(screen)
 player = Player((600,750),camera_group)
 camera_group.add(player)
@@ -60,9 +64,6 @@ start= True
 Tutorial = False
 Game_go = False
 game_over = False
-
-
-
 while True:
 
     for event in pygame.event.get():
@@ -92,26 +93,33 @@ while True:
             Tutorial = False  
 
     elif Game_go == True: 
+        offset = camera_group.center_target_camera(player)
+        see1_offset = see1.move(-offset[0],-offset[1])
+        see2_offset = see2.move(-offset[0],-offset[1])
+        see3_offset = see3.move(-offset[0],-offset[1])    
         
-        
-        
-        
-        mapa.draw_background(camera_group.center_target_camera(player))
+        mapa.draw_background(offset)
+
         player.draw(screen)
         player.update()
+
         animal.update()
-        animal.draw(screen)
-        #lišta v rohu
+        animal.draw(screen,offset)  
+
+        screen.blit(see_image,see1_offset)
+        screen.blit(see_image,see2_offset)
+        screen.blit(see_image,see3_offset)
+
         screen.blit(under_bar,(1100,0))
         screen.blit(health,(1120,8))
         screen.blit(food,(1120,38))
         screen.blit(water,(1120,23))
         screen.blit(tmp,(1120,53))
 
-        text1 = font1.render(f"Day: {day}", False, "#000000")
-        text2 = font1.render(f"Wood: {0}", False, "#000000")
-        screen.blit(text1, (1120, 67))
-        screen.blit(text2, (1155, 67))
+        day_text = font1.render(f"Day: {day}", False, "#000000")
+        wood_text = font1.render(f"Wood: {0}", False, "#000000")
+        screen.blit(day_text, (1120, 67))
+        screen.blit(wood_text, (1155, 67))
 
         health_bar.draw_Healthbar(screen)
         food_bar.draw_Foodbar(screen)
@@ -119,8 +127,7 @@ while True:
         temperature_bar.draw_Temperaturebar(screen)
         
        
-        
-        temperature_bar.tp = 50
+
         
         elapsed_time = pygame.time.get_ticks()
         elapsed_time_day = pygame.time.get_ticks()  / 600000 #600 000 nastavení dne na 10 minut
@@ -135,7 +142,8 @@ while True:
         #ubírání jídla a pití každých 10 vteřin
         if elapsed_time - decrease_fd_wt > 10000:
             water_bar.wt -= 50
-            food_bar.fd -= 1                  
+            food_bar.fd -= 20
+            temperature_bar.tp -= 5                  
             decrease_fd_wt = elapsed_time
         
         if food_bar.fd == 0 or water_bar.wt == 0:
@@ -143,25 +151,37 @@ while True:
                 health_bar.hp -= 10
                 decrease_hp = elapsed_time
 
-        if water_bar.wt > 75: #dořešit aby se to dělo když bude jídlo s pitím aspon nad 75 
-           if health_bar.hp < 100 and elapsed_time - increase_hp > 1000:
-                 health_bar.hp += 5    
-                 increase_hp = elapsed_time
         
-        #dořešit aby jezero bylo na sparavné pozici a taky aby
-        see1 = pygame.Rect(400, 571, 80, 60)
-        pygame.draw.rect(screen,(255,255,255),see1)
-        if player.rect.colliderect(see1):
+        if food_bar.fd > 75 and water_bar.wt > 75:
+            if health_bar.hp < 100 and elapsed_time - increase_hp > 1000:
+                 health_bar.hp = 100   
+                 increase_hp = elapsed_time
+        elif water_bar.wt > 75: 
+           if health_bar.hp < 100 and elapsed_time - increase_hp > 1000:
+                 health_bar.hp += 2    
+                 increase_hp = elapsed_time
+        elif food_bar.fd > 75: 
+           if health_bar.hp < 100 and elapsed_time - increase_hp > 1000:
+                 health_bar.hp += 2    
+                 increase_hp = elapsed_time
+
+        
+        if player.rect.colliderect(see1_offset):
+            water_bar.wt = 100
+        elif player.rect.colliderect(see2_offset):
+            water_bar.wt = 100
+        elif player.rect.colliderect(see3_offset):
             water_bar.wt = 100
             
+    
         if health_bar.hp <= 0:
          game_over =True
          Game_go = False
        
     if game_over == True :
         screen.blit(background, (0, 0))
-        text3 = font3.render(f"Days Survived: {day}", False,  "#ff0000")
-        over = font2.render(f"YOU LOSE", False, "#ff0000")
+        text3 = font3.render(f"Days Survived: {day}", False,  "#000000")
+        over = font2.render(f"YOU LOSE", False, "#000000")
         screen.blit(text3, (485,400))
         screen.blit(over, (450,310))
         play_again_button.draw(screen)
