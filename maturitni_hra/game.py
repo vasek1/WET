@@ -27,15 +27,21 @@ tmp= pygame.image.load("image/bars/tmp.png")
 start_image = pygame.image.load("image/menu/start_tlacitko.png")
 exit_image= pygame.image.load("image/menu/exit_tlacitko.png")
 play_again_image = pygame.image.load("image/gameover/play_again.png")
+win_screen = pygame.image.load("image/gameover/win_screen.png")
 tutorial_image = pygame.image.load("image/tutorial/skip_tlacitko.png")
-see_image = pygame.image.load("image/sees/see1.png").convert_alpha()
+see_image = pygame.image.load("image/sees/see1.png")
+table_image = pygame.image.load("image/gameover/table.png")
 level_data = ("image/map/mapa.tmx")
 
 tutorial_button = button.Button(700,690, tutorial_image,width1=46,height1=22,scale= 5)
-start_button = button.Button(450,250, start_image,width1=46,height1=22,scale=  7)
-exit_button = button.Button(470,450, exit_image, width1=46,height1=22,scale= 6)
-exit2_button = button.Button(510,450, exit_image, width1=46,height1=22,scale= 5)
-play_again_button = button.Button(400,600,play_again_image,width1=92,height1=22,scale= 5)
+start_button = button.Button(450,320, start_image,width1=46,height1=22,scale=  7)
+exit_button = button.Button(470,550, exit_image, width1=46,height1=22,scale= 6)
+
+exit2_button = button.Button(510,600, exit_image, width1=46,height1=22,scale= 5)
+play_again_button = button.Button(400,450,play_again_image,width1=92,height1=22,scale= 5)
+
+exit3_button = button.Button(490,585, exit_image, width1=46,height1=22,scale= 5)
+play_again2_button = button.Button(370,470,play_again_image,width1=92,height1=22,scale= 5)
 
 see1 = pygame.Rect(238, 715, 70, 60)
 see2 = pygame.Rect(898, 155, 100, 110)
@@ -64,6 +70,7 @@ start= True
 Tutorial = False
 Game_go = False
 game_over = False
+game_win = False
 while True:
 
     for event in pygame.event.get():
@@ -132,13 +139,7 @@ while True:
         elapsed_time = pygame.time.get_ticks()
         elapsed_time_day = pygame.time.get_ticks()  / 600000 #600 000 nastavení dne na 10 minut
         
-        # počítání dnů
-        if elapsed_time_day >=  10*day:
-            day += 1
-            elapsed_time_day = 0
-        if day == 10:
-            game_over = True   
-            Game_go = False
+        
         #ubírání jídla a pití každých 10 vteřin
         if elapsed_time - decrease_fd_wt > 10000:
             water_bar.wt -= 50
@@ -178,6 +179,12 @@ while True:
          game_over =True
          Game_go = False
        
+        if elapsed_time_day >=  10*day:
+            day += 1
+            elapsed_time_day = 0
+        if day == 10:
+            game_win = True   
+            Game_go = False
     if game_over == True :
         screen.blit(background, (0, 0))
         text3 = font3.render(f"Days Survived: {day}", False,  "#000000")
@@ -193,12 +200,34 @@ while True:
             Game_go = False
             health_bar.hp = 100
             water_bar.wt = 100
+            food_bar.fd = 100
+            temperature_bar.tp = 100
             day = 0
             elapsed_time_day = 0
             player.rect.x = 600
             player.rect.y = 750
         elif exit2_button.click(event):
             pygame.quit()
-
+    if game_win == True:
+        screen.blit(win_screen, (0, 0))
+        screen.blit(table_image, (327,67))    
+        play_again2_button.draw(screen)
+        exit3_button.draw(screen)
+        if play_again2_button.click(event):
+            game_win = False
+            start = True
+            game_over = False
+            Tutorial = False
+            Game_go = False
+            health_bar.hp = 100
+            water_bar.wt = 100
+            food_bar.fd = 100
+            temperature_bar.tp = 100
+            day = 0
+            elapsed_time_day = 0
+            player.rect.x = 600
+            player.rect.y = 750
+        elif exit3_button.click(event):
+            pygame.quit()
     pygame.display.update() 
     clock.tick(60) 
