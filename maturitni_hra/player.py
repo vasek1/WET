@@ -5,7 +5,7 @@ from settings import *
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self,pos,camera_group):
+    def __init__(self,pos,camera_group,animal_group):
         super().__init__() 
         self.x = 100
         self.y = 200
@@ -15,6 +15,7 @@ class Player(pygame.sprite.Sprite):
         self.index = 0
         self.rect = self.image.get_rect(center = pos)
         self.camera_group = camera_group
+        self.animal_group = animal_group
         
     def animation(self, direction):
         frame_count = 6
@@ -34,12 +35,12 @@ class Player(pygame.sprite.Sprite):
             self.index = 0
 
         self.image = get_image(self.spritesheet, int(self.index), direction, 32,32,1)
-        
+    
     def update(self):
+        
         dx = 0
         dy = 0
         
-        #muzu vymenit i za normalni if ale pak se bude panacek zrychlovat kdyz pujde diagonalne
         key = pygame.key.get_pressed()
         if key[pygame.K_a]:
             dx -= self.speed
@@ -55,8 +56,10 @@ class Player(pygame.sprite.Sprite):
             self.animation(3)
         elif key[pygame.K_k]:
             self.animation2(6)
-
-      
+            for animal in self.animal_group:
+                    #vyřešit aby se dala slepice zabít pouze když je hráč v určité blízkosti
+                    animal.dead() 
+        
         
         if self.rect.x < 319:
             self.rect.x = 319 + 1
@@ -70,6 +73,8 @@ class Player(pygame.sprite.Sprite):
 
         self.rect.x += dx 
         self.rect.y += dy 
+        
+        
         
     def draw(self, screen):
         screen.blit(self.image, self.rect)
