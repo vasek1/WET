@@ -33,7 +33,7 @@ tutorial_image = pygame.image.load("image/tutorial/skip_tlacitko.png")
 see_image = pygame.image.load("image/sees/see1.png")
 table_image = pygame.image.load("image/gameover/table_text.png")
 level_data = ("image/map/mapa.tmx")
-fire = pygame.image.load("image/menu/start_tlacitko.png")
+fire_image = pygame.image.load("image/menu/start_tlacitko.png")
 
 tutorial_button = button.Button(700,690, tutorial_image,width1=46,height1=22,scale= 5)
 start_button = button.Button(450,320, start_image,width1=46,height1=22,scale=  7)
@@ -64,6 +64,9 @@ animal_group.add(animal)
 camera_group = Camera(screen)
 player = Player((600,750),camera_group,animal_group)
 camera_group.add(player)
+
+fire = pygame.Rect(player.rect.x, player.rect.y,10,10)
+
 
 fire_time = pygame.time.get_ticks()
 animal_spawn = pygame.time.get_ticks()
@@ -114,7 +117,8 @@ while True:
         see1_offset = see1.move(-offset[0],-offset[1])
         see2_offset = see2.move(-offset[0],-offset[1])
         see3_offset = see3.move(-offset[0],-offset[1])    
-        position = (player)
+        fire_offset = fire.move(-offset[0],-offset[1])
+
         mapa.draw_background(offset)
 
         player.draw(screen)
@@ -134,7 +138,7 @@ while True:
                     animal_spawn = elapsed_time
 
         if player.fire == True:
-            screen.blit(fire,position)
+            screen.blit(fire_image,fire_offset)
             if elapsed_time - fire_time >30000:
                 player.fire == False
                 fire_time = elapsed_time
