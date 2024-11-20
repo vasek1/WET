@@ -33,6 +33,7 @@ tutorial_image = pygame.image.load("image/tutorial/skip_tlacitko.png")
 see_image = pygame.image.load("image/sees/see1.png")
 table_image = pygame.image.load("image/gameover/table_text.png")
 level_data = ("image/map/mapa.tmx")
+fire = pygame.image.load("image/menu/start_tlacitko.png")
 
 tutorial_button = button.Button(700,690, tutorial_image,width1=46,height1=22,scale= 5)
 start_button = button.Button(450,320, start_image,width1=46,height1=22,scale=  7)
@@ -64,6 +65,7 @@ camera_group = Camera(screen)
 player = Player((600,750),camera_group,animal_group)
 camera_group.add(player)
 
+fire_time = pygame.time.get_ticks()
 animal_spawn = pygame.time.get_ticks()
 decrease_hp= pygame.time.get_ticks()
 decrease_fd_wt= pygame.time.get_ticks()
@@ -112,7 +114,7 @@ while True:
         see1_offset = see1.move(-offset[0],-offset[1])
         see2_offset = see2.move(-offset[0],-offset[1])
         see3_offset = see3.move(-offset[0],-offset[1])    
-        
+        position = (player)
         mapa.draw_background(offset)
 
         player.draw(screen)
@@ -125,12 +127,17 @@ while True:
                 animal.image = get_image(animal.spritesheet, 5, 5, 30, 30, 1)
                 # vyřešit aby se přidalo 100 a pak se zase ubíralo i když je zvíře mrtvé
                 food_bar.fd = 100
-                if elapsed_time - decrease_fd_wt > 10000:
-                    food_bar.fd -= 20
+                
                 if elapsed_time - animal_spawn >60000:
                     animal.image = get_image(animal.spritesheet, 0, 0, 30, 30, 1)            
                     animal.live = True
                     animal_spawn = elapsed_time
+
+        if player.fire == True:
+            screen.blit(fire,position)
+            if elapsed_time - fire_time >30000:
+                player.fire == False
+                fire_time = elapsed_time
 
         screen.blit(see_image,see1_offset)
         screen.blit(see_image,see2_offset)
@@ -143,7 +150,7 @@ while True:
         screen.blit(tmp,(1120,53))
 
         day_text = font1.render(f"Day: {day}", False, "#000000")
-        wood_text = font1.render(f"Wood: {0}", False, "#000000")
+        wood_text = font1.render(f"Wood: {player.wood}", False, "#000000")
         screen.blit(day_text, (1120, 67))
         screen.blit(wood_text, (1155, 67))
 

@@ -16,7 +16,7 @@ class Player(pygame.sprite.Sprite):
         self.rect = self.image.get_rect(center = pos)
         self.camera_group = camera_group
         self.animal_group = animal_group
-        
+        self.wood = 0
     def animation(self, direction):
         frame_count = 6
 
@@ -35,7 +35,8 @@ class Player(pygame.sprite.Sprite):
             self.index = 0
 
         self.image = get_image(self.spritesheet, int(self.index), direction, 32,32,1)
-    
+    def fire_on(self):
+        self.fire = True
     def update(self):
         
         dx = 0
@@ -59,7 +60,9 @@ class Player(pygame.sprite.Sprite):
             for animal in self.animal_group:
                     #vyřešit aby se dala slepice zabít pouze když je hráč v určité blízkosti
                     animal.dead() 
-        
+        elif key[pygame.K_b] and self.wood > 5:
+            self.wood = 0
+            self.fire_on()
         
         if self.rect.x < 319:
             self.rect.x = 319 + 1
