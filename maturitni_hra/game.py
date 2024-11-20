@@ -33,7 +33,7 @@ tutorial_image = pygame.image.load("image/tutorial/skip_tlacitko.png")
 see_image = pygame.image.load("image/sees/see1.png")
 table_image = pygame.image.load("image/gameover/table_text.png")
 level_data = ("image/map/mapa.tmx")
-fire_image = pygame.image.load("image/menu/start_tlacitko.png")
+fire_image = pygame.image.load("image/fire.png")
 
 tutorial_button = button.Button(700,690, tutorial_image,width1=46,height1=22,scale= 5)
 start_button = button.Button(450,320, start_image,width1=46,height1=22,scale=  7)
@@ -136,12 +136,8 @@ while True:
                     animal.image = get_image(animal.spritesheet, 0, 0, 30, 30, 1)            
                     animal.live = True
                     animal_spawn = elapsed_time
-
-        if player.fire == True:
-            screen.blit(fire_image,fire_offset)
-            if elapsed_time - fire_time >30000:
-                player.fire == False
-                fire_time = elapsed_time
+        
+        
 
         screen.blit(see_image,see1_offset)
         screen.blit(see_image,see2_offset)
@@ -163,7 +159,15 @@ while True:
         water_bar.draw_Waterbar(screen)
         temperature_bar.draw_Temperaturebar(screen)
         
-       
+        if player.fire == True:
+            if temperature_bar.tp < 100:
+                temperature_bar.tp += 15
+            if elapsed_time - fire_time <= 10000:
+                screen.blit(fire_image, fire_offset)
+                #dořešit aby se dal spawnout znovu
+            if elapsed_time - fire_time >10000:
+               player.fire == False
+               fire_time = elapsed_time
 
         
         
@@ -171,9 +175,9 @@ while True:
         if elapsed_time - decrease_fd_wt > 10000:
             water_bar.wt -= 20
             food_bar.fd -= 20
-            temperature_bar.tp -= 5                  
+            temperature_bar.tp -= 20                  
             decrease_fd_wt = elapsed_time
-        
+            
         if food_bar.fd == 0 or water_bar.wt == 0:
           if health_bar.hp > 0 and elapsed_time - decrease_hp > 1000:
                 health_bar.hp -= 5

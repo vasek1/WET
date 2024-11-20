@@ -62,6 +62,7 @@ class Player(pygame.sprite.Sprite):
                     #vyřešit aby se dala slepice zabít pouze když je hráč v určité blízkosti
                     animal.dead() 
         elif key[pygame.K_b] and self.wood >= 5:
+            #vyřešit aby se odebralo pouze 5 a ne všechno
             self.wood -= 5
             self.fire_on()
         
