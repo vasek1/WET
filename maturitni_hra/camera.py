@@ -12,3 +12,4 @@ class Camera(pygame.sprite.Group):
         self.offset.x = target.rect.centerx - self.half_w 
         self.offset.y = target.rect.centery - self.half_h 
         return (self.offset.x, self.offset.y)
+#přidat zoom

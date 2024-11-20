@@ -18,6 +18,7 @@ class Player(pygame.sprite.Sprite):
         self.animal_group = animal_group
         self.wood = 5
         self.fire = False
+        
     def animation(self, direction):
         frame_count = 6
 
@@ -65,7 +66,8 @@ class Player(pygame.sprite.Sprite):
             #vyřešit aby se odebralo pouze 5 a ne všechno
             self.wood -= 5
             self.fire_on()
-        
+            # přidat dostávání dřeva podle chůze, přidat zpomalení když je v jezeru
+            
         if self.rect.x < 319:
             self.rect.x = 319 + 1
         elif self.rect.x > 830:
@@ -79,7 +81,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.x += dx 
         self.rect.y += dy 
         
-        
+       
         
         
     def draw(self, screen):

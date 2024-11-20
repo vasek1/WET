@@ -65,7 +65,7 @@ camera_group = Camera(screen)
 player = Player((600,750),camera_group,animal_group)
 camera_group.add(player)
 
-fire = pygame.Rect(player.rect.x, player.rect.y,10,10)
+
 
 
 fire_time = pygame.time.get_ticks()
@@ -117,12 +117,13 @@ while True:
         see1_offset = see1.move(-offset[0],-offset[1])
         see2_offset = see2.move(-offset[0],-offset[1])
         see3_offset = see3.move(-offset[0],-offset[1])    
-        fire_offset = fire.move(-offset[0],-offset[1])
+        
 
         mapa.draw_background(offset)
 
         player.draw(screen)
         player.update()
+        
 
         animal_group.update()
         for animal in animal_group:
@@ -130,7 +131,8 @@ while True:
             if not animal.live:
                 animal.image = get_image(animal.spritesheet, 5, 5, 30, 30, 1)
                 # vyřešit aby se přidalo 100 a pak se zase ubíralo i když je zvíře mrtvé
-                food_bar.fd = 100
+                if food_bar.fd < 100:
+                    food_bar.fd = food_bar.fd + 20
                 
                 if elapsed_time - animal_spawn >60000:
                     animal.image = get_image(animal.spritesheet, 0, 0, 30, 30, 1)            
@@ -158,25 +160,29 @@ while True:
         food_bar.draw_Foodbar(screen)
         water_bar.draw_Waterbar(screen)
         temperature_bar.draw_Temperaturebar(screen)
+
+        #vyrešit aby ohen nejezdil se mnou
+        fire = pygame.Rect(player.rect.x, player.rect.y,10,10)
         
         if player.fire == True:
             if temperature_bar.tp < 100:
-                temperature_bar.tp += 15
-            if elapsed_time - fire_time <= 10000:
-                screen.blit(fire_image, fire_offset)
-                #dořešit aby se dal spawnout znovu
-            if elapsed_time - fire_time >10000:
-               player.fire == False
-               fire_time = elapsed_time
-
+                temperature_bar.tp += 2
+            if elapsed_time - fire_time <= 10000:  
+                screen.blit(fire_image, fire)
+            else: 
+                player.fire = False
+                fire_time = elapsed_time
+            
         
         
         
         if elapsed_time - decrease_fd_wt > 10000:
             water_bar.wt -= 20
             food_bar.fd -= 20
-            temperature_bar.tp -= 20                  
             decrease_fd_wt = elapsed_time
+            player.wood += 5
+            if player.fire == False:
+                temperature_bar.tp -= 20                  
             
         if food_bar.fd == 0 or water_bar.wt == 0:
           if health_bar.hp > 0 and elapsed_time - decrease_hp > 1000:
