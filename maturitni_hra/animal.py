@@ -17,17 +17,11 @@ class Animal(pygame.sprite.Sprite):
         self.live = True
     def animation(self, direction):
         frame_count = 2
-
         self.index += 0.1
-
         if self.index >= frame_count:
             self.index = 0
 
         self.image = get_image(self.spritesheet, int(self.index), direction, 30,30,1)
-
-    def dead(self):
-        self.live = False
-        
     def update(self):
             if self.live:
                 if self.rect.x <= 840:

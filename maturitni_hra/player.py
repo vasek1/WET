@@ -18,7 +18,7 @@ class Player(pygame.sprite.Sprite):
         self.animal_group = animal_group
         self.wood = 5
         self.fire = False
-        
+        self.can_kill = False
     def animation(self, direction):
         frame_count = 6
 
@@ -39,8 +39,8 @@ class Player(pygame.sprite.Sprite):
         self.image = get_image(self.spritesheet, int(self.index), direction, 32,32,1)
     def fire_on(self):
         self.fire = True
+        self.wood = self.wood - 5
     def update(self):
-        
         dx = 0
         dy = 0
         
@@ -59,14 +59,11 @@ class Player(pygame.sprite.Sprite):
             self.animation(3)
         elif key[pygame.K_k]:
             self.animation2(6)
-            for animal in self.animal_group:
-                    #vyřešit aby se dala slepice zabít pouze když je hráč v určité blízkosti
-                    animal.dead() 
+            self.can_kill = True
         elif key[pygame.K_b] and self.wood >= 5:
-            #vyřešit aby se odebralo pouze 5 a ne všechno
-            self.wood -= 5
             self.fire_on()
-            # přidat dostávání dřeva podle chůze, přidat zpomalení když je v jezeru
+            #potřebuji aby se ubíralo pouze 5 dreva a ne vsechno 
+            # musim vyřešit jak se bude přidavat drevo buď když hráč ujde nějakou vzdálenost nebo když bude držet klávesu e tak bude animace sekání do dřeva a bude se přidávat
             
         if self.rect.x < 319:
             self.rect.x = 319 + 1

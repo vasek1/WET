@@ -11,7 +11,6 @@ class Button():
         self.width = 1200
         self.height = 800
         self.screen = pygame.display.set_mode((self.width, self.height))
-
     def draw(self,screen):
         screen.blit(self.image,(self.rect.x, self.rect.y))
     def click(self,event):

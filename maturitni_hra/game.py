@@ -1,6 +1,4 @@
 import pygame
-from random import randint
-from sys import exit
 import button
 from player import Player
 from settings import *
@@ -30,10 +28,11 @@ exit_image= pygame.image.load("image/menu/exit_tlacitko.png")
 play_again_image = pygame.image.load("image/gameover/play_again.png")
 win_screen = pygame.image.load("image/gameover/win_screen.png")
 tutorial_image = pygame.image.load("image/tutorial/skip_tlacitko.png")
-see_image = pygame.image.load("image/sees/see1.png")
+see_image = pygame.image.load("image/other/see1.png")
 table_image = pygame.image.load("image/gameover/table_text.png")
 level_data = ("image/map/mapa.tmx")
-fire_image = pygame.image.load("image/fire.png")
+fire_image = pygame.image.load("image/other/fire.png")
+animal_area_image = pygame.image.load("image/other/animal_area.png")
 
 tutorial_button = button.Button(700,690, tutorial_image,width1=46,height1=22,scale= 5)
 start_button = button.Button(450,320, start_image,width1=46,height1=22,scale=  7)
@@ -48,6 +47,7 @@ play_again2_button = button.Button(370,470,play_again_image,width1=92,height1=22
 see1 = pygame.Rect(238, 715, 70, 60)
 see2 = pygame.Rect(898, 155, 100, 110)
 see3 = pygame.Rect(870, 175, 160, 55)  
+animal_area = pygame.Rect(848, 880, 96, 80)
 
 mapa = Map(screen,level_data)
 
@@ -67,12 +67,14 @@ camera_group.add(player)
 
 
 
-
+kill_time = pygame.time.get_ticks()
 fire_time = pygame.time.get_ticks()
 animal_spawn = pygame.time.get_ticks()
 decrease_hp= pygame.time.get_ticks()
 decrease_fd_wt= pygame.time.get_ticks()
 increase_hp= pygame.time.get_ticks()
+
+
 elapsed_time = 0
 elapsed_time_day = 0
 day = 0
@@ -117,7 +119,7 @@ while True:
         see1_offset = see1.move(-offset[0],-offset[1])
         see2_offset = see2.move(-offset[0],-offset[1])
         see3_offset = see3.move(-offset[0],-offset[1])    
-        
+        spawn_area_offset = animal_area.move(-offset[0],-offset[1]) 
 
         mapa.draw_background(offset)
 
@@ -128,22 +130,37 @@ while True:
         animal_group.update()
         for animal in animal_group:
             animal.draw(screen, offset)
-            if not animal.live:
-                animal.image = get_image(animal.spritesheet, 5, 5, 30, 30, 1)
-                # vyřešit aby se přidalo 100 a pak se zase ubíralo i když je zvíře mrtvé
-                if food_bar.fd < 100:
-                    food_bar.fd = food_bar.fd + 20
-                
-                if elapsed_time - animal_spawn >60000:
-                    animal.image = get_image(animal.spritesheet, 0, 0, 30, 30, 1)            
-                    animal.live = True
-                    animal_spawn = elapsed_time
-        
+
+            if player.can_kill == True:
+                 if elapsed_time - kill_time >100:
+                     player.can_kill = False
+                     kill_time = elapsed_time
+                 if player.rect.colliderect(spawn_area_offset):
+                        animal.live = False
+                        if not animal.live:
+                            animal.image = get_image(animal.spritesheet, 5, 5, 30, 30, 1)
+                            if not animal.live and food_bar.fd < 100:
+                                food_bar.fd = 100
+                            if elapsed_time - decrease_fd_wt > 10000:
+                                food_bar.fd -= 20
+                                water_bar.wt -= 20
+                                decrease_fd_wt = elapsed_time
+                                if player.fire == False:
+                                    temperature_bar.tp -= 20  
+
+        if not animal.live and elapsed_time - animal_spawn >20000:
+             animal.image = get_image(animal.spritesheet, 0, 0, 30, 30, 1)            
+             animal.live = True
+             animal_spawn = elapsed_time
+                                
+               
+      
         
 
         screen.blit(see_image,see1_offset)
         screen.blit(see_image,see2_offset)
         screen.blit(see_image,see3_offset)
+        screen.blit(animal_area_image,spawn_area_offset)
 
         screen.blit(under_bar,(1100,0))
         screen.blit(health,(1120,8))
@@ -175,32 +192,41 @@ while True:
             
         
         
-        
-        if elapsed_time - decrease_fd_wt > 10000:
-            water_bar.wt -= 20
-            food_bar.fd -= 20
-            decrease_fd_wt = elapsed_time
-            player.wood += 5
-            if player.fire == False:
-                temperature_bar.tp -= 20                  
+        if animal.live == True :
+            if elapsed_time - decrease_fd_wt > 10000:
+                water_bar.wt -= 20
+                food_bar.fd -= 10
+                decrease_fd_wt = elapsed_time
+                player.wood += 5
+                if player.fire == False:
+                    temperature_bar.tp -= 8             
             
-        if food_bar.fd == 0 or water_bar.wt == 0:
+        if food_bar.fd == 0 or water_bar.wt == 0 or temperature_bar.tp == 0:
           if health_bar.hp > 0 and elapsed_time - decrease_hp > 1000:
                 health_bar.hp -= 5
                 decrease_hp = elapsed_time
 
+        if food_bar.fd == 0 and water_bar.wt == 0 and temperature_bar.tp == 0:
+                health_bar.hp = 0
+                
+
         
-        if food_bar.fd > 75 and water_bar.wt > 75:
+        if food_bar.fd > 75 and water_bar.wt > 75 and temperature_bar.tp > 75:
             if health_bar.hp < 100 and elapsed_time - increase_hp > 1000:
                  health_bar.hp += 10   
                  increase_hp = elapsed_time
         elif water_bar.wt > 75:
-           if food_bar.fd > 0: 
+           if food_bar.fd > 0 and temperature_bar.tp > 0:
             if health_bar.hp < 100 and elapsed_time - increase_hp > 1000:
                  health_bar.hp += 2    
                  increase_hp = elapsed_time
         elif food_bar.fd > 75:
-           if water_bar.wt > 0:  
+           if water_bar.wt > 0 and temperature_bar.tp > 0:  
+            if health_bar.hp < 100 and elapsed_time - increase_hp > 1000:
+                 health_bar.hp += 2    
+                 increase_hp = elapsed_time
+        elif temperature_bar.tp > 75:
+           if water_bar.wt > 0 and food_bar.fd > 0:  
             if health_bar.hp < 100 and elapsed_time - increase_hp > 1000:
                  health_bar.hp += 2    
                  increase_hp = elapsed_time
@@ -218,10 +244,10 @@ while True:
          game_over =True
          Game_go = False
        
-        if elapsed_time_day >=  10*day:
+        if elapsed_time_day >=  1*day:
             day += 1
             elapsed_time_day = 0
-        if day == 10:
+        if day == 6:
             game_win = True   
             Game_go = False
             
@@ -247,6 +273,8 @@ while True:
             elapsed_time_day = 0
             player.rect.x = 600
             player.rect.y = 750
+            animal.live = True
+            player.wood = 0
         elif exit2_button.click(event):
             pygame.quit()
     if game_win == True:
@@ -255,7 +283,6 @@ while True:
         play_again2_button.draw(screen)
         exit3_button.draw(screen)
         if play_again2_button.click(event):
-            game_win = False
             start = True
             game_over = False
             Tutorial = False
@@ -268,6 +295,8 @@ while True:
             elapsed_time_day = 0
             player.rect.x = 600
             player.rect.y = 750
+            animal.live = True
+            player.wood = 0
         elif exit3_button.click(event):
             pygame.quit()
     pygame.display.update() 
