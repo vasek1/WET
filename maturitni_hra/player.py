@@ -5,17 +5,16 @@ from settings import *
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self,pos,camera_group,animal_group):
+    def __init__(self,pos,camera_group):
         super().__init__() 
         self.x = 100
         self.y = 200
         self.spritesheet = pygame.image.load("image/entities/Player.png").convert_alpha()
         self.image = get_image(self.spritesheet, 0, 0, 32, 31, 1) 
-        self.speed = 1
+        self.speed = 1.3
         self.index = 0
         self.rect = self.image.get_rect(center = pos)
         self.camera_group = camera_group
-        self.animal_group = animal_group
         self.wood = 5
         self.fire = False
         self.can_kill = False
@@ -37,6 +36,16 @@ class Player(pygame.sprite.Sprite):
             self.index = 0
 
         self.image = get_image(self.spritesheet, int(self.index), direction, 32,32,1)
+    def animation3(self, direction):
+        frame_count = 2
+
+
+        self.index += 0.1
+        if self.index >= frame_count:
+            self.index = 0
+
+        self.image = get_image(self.spritesheet, int(self.index), direction, 33,33,1)
+
     def fire_on(self):
         self.fire = True
         self.wood = self.wood - 5
@@ -62,8 +71,9 @@ class Player(pygame.sprite.Sprite):
             self.can_kill = True
         elif key[pygame.K_b] and self.wood >= 5:
             self.fire_on()
-            #potřebuji aby se ubíralo pouze 5 dreva a ne vsechno 
-            # musim vyřešit jak se bude přidavat drevo buď když hráč ujde nějakou vzdálenost nebo když bude držet klávesu e tak bude animace sekání do dřeva a bude se přidávat
+        elif key[pygame.K_j]:
+            self.animation3(7)
+            self.cut_trees = True
             
         if self.rect.x < 319:
             self.rect.x = 319 + 1
@@ -78,7 +88,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.x += dx 
         self.rect.y += dy 
         
-       
+     
         
         
     def draw(self, screen):

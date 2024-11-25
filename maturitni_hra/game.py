@@ -47,7 +47,7 @@ play_again2_button = button.Button(370,470,play_again_image,width1=92,height1=22
 see1 = pygame.Rect(238, 715, 70, 60)
 see2 = pygame.Rect(898, 155, 100, 110)
 see3 = pygame.Rect(870, 175, 160, 55)  
-animal_area = pygame.Rect(848, 880, 96, 80)
+animal_area = pygame.Rect(855, 907, 80, 22)
 
 mapa = Map(screen,level_data)
 
@@ -62,7 +62,7 @@ animal = Animal((800,750))
 animal_group.add(animal)
 
 camera_group = Camera(screen)
-player = Player((600,750),camera_group,animal_group)
+player = Player((600,750),camera_group)
 camera_group.add(player)
 
 
@@ -126,6 +126,7 @@ while True:
         player.draw(screen)
         player.update()
         
+        mapa.draw_trees(offset)
 
         animal_group.update()
         for animal in animal_group:
@@ -154,6 +155,9 @@ while True:
              animal_spawn = elapsed_time
                                 
                
+      
+        
+
         screen.blit(see_image,see1_offset)
         screen.blit(see_image,see2_offset)
         screen.blit(see_image,see3_offset)
@@ -229,14 +233,13 @@ while True:
                  increase_hp = elapsed_time
 
         
-        if player.rect.colliderect(see1_offset):
+        if player.rect.colliderect(see1_offset) or player.rect.colliderect(see2_offset) or player.rect.colliderect(see3_offset) :
             water_bar.wt = 100
-        elif player.rect.colliderect(see2_offset):
-            water_bar.wt = 100
-        elif player.rect.colliderect(see3_offset):
-            water_bar.wt = 100
-            
-    
+            player.speed = 0.51
+        else :
+                player.speed = 1.3
+        print(player.speed)
+
         if health_bar.hp <= 0:
          game_over =True
          Game_go = False
@@ -281,7 +284,7 @@ while True:
         exit3_button.draw(screen)
         if play_again2_button.click(event):
             start = True
-            game_over = False
+            game_win = False
             Tutorial = False
             Game_go = False
             health_bar.hp = 100
