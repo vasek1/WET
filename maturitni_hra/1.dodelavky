@@ -3,5 +3,6 @@ musim vyřešit jak se bude přidavat drevo buď když hráč ujde nějakou vzd�
 přidat stromy jako objekty nebo jako vrstvu  musíme poradit proč mi to stromy vykresluje výš kdyz je dávám jako vrstvu a ne tam kde jsem je namaloval
 přidat zoom
 přidat abych chodil za stromy ne přes ně
-můžu přidat logika když je den dva tak se bude ubírat více jídla, pití a teploty
 kdyz hrac vejde do vody tak se zpomali 
+vyresit aby se mnou nechodil oheň
+můžu přidat logika když je den dva tak se bude ubírat více jídla, pití a teploty

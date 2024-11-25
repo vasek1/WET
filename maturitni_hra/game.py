@@ -154,9 +154,6 @@ while True:
              animal_spawn = elapsed_time
                                 
                
-      
-        
-
         screen.blit(see_image,see1_offset)
         screen.blit(see_image,see2_offset)
         screen.blit(see_image,see3_offset)
