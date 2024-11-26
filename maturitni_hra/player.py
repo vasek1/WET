@@ -15,9 +15,10 @@ class Player(pygame.sprite.Sprite):
         self.index = 0
         self.rect = self.image.get_rect(center = pos)
         self.camera_group = camera_group
-        self.wood = 5
+        self.wood = 0
         self.fire = False
         self.can_kill = False
+        self.cut_trees = False
     def animation(self, direction):
         frame_count = 6
 
@@ -54,6 +55,7 @@ class Player(pygame.sprite.Sprite):
        
         key = pygame.key.get_pressed()
         if self.fire == False:
+          if not self.cut_trees:
             if key[pygame.K_a]:
                 dx -= self.speed
                 self.animation(2)
@@ -67,6 +69,7 @@ class Player(pygame.sprite.Sprite):
                 dy += self.speed
                 self.animation(3)
         if self.fire == True:
+          if not self.cut_trees:
             if key[pygame.K_a]:
                 dx -= self.speed
                 self.animation(6)
@@ -87,7 +90,11 @@ class Player(pygame.sprite.Sprite):
         elif key[pygame.K_j]:
             self.animation3(11)
             self.cut_trees = True
+            self.wood += 0.01
+        else: 
+            self.cut_trees = False
             
+        print(self.wood)
         if self.rect.x < 319:
             self.rect.x = 319 + 1
         elif self.rect.x > 830:

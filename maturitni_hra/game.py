@@ -169,7 +169,7 @@ while True:
         screen.blit(tmp,(1120,53))
 
         day_text = font1.render(f"Day: {day}", False, "#000000")
-        wood_text = font1.render(f"Wood: {player.wood}", False, "#000000")
+        wood_text = font1.render(f"Wood: {round(player.wood)}", False, "#000000")
         screen.blit(day_text, (1120, 67))
         screen.blit(wood_text, (1155, 67))
 
@@ -197,7 +197,6 @@ while True:
                 water_bar.wt -= 20
                 food_bar.fd -= 10
                 decrease_fd_wt = elapsed_time
-                player.wood += 5
                 if player.fire == False:
                     temperature_bar.tp -= 8             
             
@@ -237,7 +236,7 @@ while True:
             player.speed = 0.51
         else :
                 player.speed = 1.3
-        print(player.speed)
+        
 
         if health_bar.hp <= 0:
          game_over =True

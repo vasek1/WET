@@ -2,8 +2,6 @@ NEVIM SI RADY
 přidat zoom
 potřebuji aby se ubíralo pouze 5 dreva a ne vsechno (asi řešení přidat jestli je tlačítko zmáčknuté nebo je držené a změnit to třeba na j_pressed = True)
 
-UKÁZKY JAK BY TO MOHLO VYPADAT
-musim vyřešit jak se bude přidavat drevo buď když hráč ujde nějakou vzdálenost nebo když bude držet klávesu j tak bude animace sekání do dřeva a bude se přidávat
 
 OTÁZKY
 přidat stromy jako objekty nebo jako vrstvu 
@@ -13,7 +11,7 @@ přidat stromy jako objekty nebo jako vrstvu
 Vyřešeno
 kdyz hrac vejde do vody tak se zpomali vyreseno(player.speed se změní ale vizuální změna tam není žádná ta je jenom kdyz je speed treba 3)
 přidat abych chodil za stromy ne přes ně(zeptat se jestli to stačí)
-
+musim vyřešit jak se bude přidavat drevo buď když hráč ujde nějakou vzdálenost nebo když bude držet klávesu j tak bude animace sekání do dřeva a bude se přidávat
 
 BONUS
 můžu přidat logika když je den dva tak se bude ubírat více jídla, pití a teploty
