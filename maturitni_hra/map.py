@@ -17,7 +17,6 @@ class Map:
           self.layers = [self.pozadi_layer, self.jezera_layer, self.priroda_layer, self.zvirata_layer,self.more_layer]
           #přidat stromy jako objekty nebo jako vrstvu  musíme poradit proč mi to stromy vykresluje výš kdyz je dávám jako vrstvu a ne tam kde jsem je namaloval
      def draw_background(self, offset):
-        
         for layer in self.layers:
             for x, y, image in layer.tiles():
                 self.background.blit(

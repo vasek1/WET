@@ -31,7 +31,6 @@ tutorial_image = pygame.image.load("image/tutorial/skip_tlacitko.png")
 see_image = pygame.image.load("image/other/see1.png")
 table_image = pygame.image.load("image/gameover/table_text.png")
 level_data = ("image/map/mapa.tmx")
-fire_image = pygame.image.load("image/other/fire.png")
 animal_area_image = pygame.image.load("image/other/animal_area.png")
 
 tutorial_button = button.Button(700,690, tutorial_image,width1=46,height1=22,scale= 5)
@@ -179,14 +178,14 @@ while True:
         water_bar.draw_Waterbar(screen)
         temperature_bar.draw_Temperaturebar(screen)
 
-        #vyrešit aby ohen nejezdil se mnou
-        fire = pygame.Rect(player.rect.x, player.rect.y,10,10)
+        
+       
         
         if player.fire == True:
             if temperature_bar.tp < 100:
                 temperature_bar.tp += 2
             if elapsed_time - fire_time <= 10000:  
-                screen.blit(fire_image, fire)
+                player.fire = True
             else: 
                 player.fire = False
                 fire_time = elapsed_time

@@ -44,35 +44,48 @@ class Player(pygame.sprite.Sprite):
         if self.index >= frame_count:
             self.index = 0
 
-        self.image = get_image(self.spritesheet, int(self.index), direction, 33,33,1)
+        self.image = get_image(self.spritesheet, int(self.index), direction, 32,32,1)
 
-    def fire_on(self):
-        self.fire = True
-        self.wood = self.wood - 5
+    
+        
     def update(self):
         dx = 0
         dy = 0
-        
+       
         key = pygame.key.get_pressed()
-        if key[pygame.K_a]:
-            dx -= self.speed
-            self.animation(2)
-        elif key[pygame.K_d]:
-            dx += self.speed
-            self.animation(4)
-        elif key[pygame.K_w]:
-            dy -= self.speed
-            self.animation(5)
-        elif key[pygame.K_s]:
-            dy += self.speed
-            self.animation(3)
-        elif key[pygame.K_k]:
-            self.animation2(6)
+        if self.fire == False:
+            if key[pygame.K_a]:
+                dx -= self.speed
+                self.animation(2)
+            elif key[pygame.K_d]:
+                dx += self.speed
+                self.animation(4)
+            elif key[pygame.K_w]:
+                dy -= self.speed
+                self.animation(5)
+            elif key[pygame.K_s]:
+                dy += self.speed
+                self.animation(3)
+        if self.fire == True:
+            if key[pygame.K_a]:
+                dx -= self.speed
+                self.animation(6)
+            elif key[pygame.K_d]:
+                dx += self.speed
+                self.animation(8)
+            elif key[pygame.K_w]:
+                dy -= self.speed
+                self.animation(9)
+            elif key[pygame.K_s]:
+                dy += self.speed
+                self.animation(7)
+        if key[pygame.K_k]:
+            self.animation2(10)
             self.can_kill = True
         elif key[pygame.K_b] and self.wood >= 5:
-            self.fire_on()
+            self.fire = True
         elif key[pygame.K_j]:
-            self.animation3(7)
+            self.animation3(11)
             self.cut_trees = True
             
         if self.rect.x < 319:
