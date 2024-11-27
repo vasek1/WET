@@ -11,7 +11,7 @@ class Player(pygame.sprite.Sprite):
         self.y = 200
         self.spritesheet = pygame.image.load("image/entities/Player.png").convert_alpha()
         self.image = get_image(self.spritesheet, 0, 0, 32, 31, 1) 
-        self.speed = 1.3
+        self.speed = 0.8
         self.index = 0
         self.rect = self.image.get_rect(center = pos)
         self.camera_group = camera_group
@@ -19,6 +19,8 @@ class Player(pygame.sprite.Sprite):
         self.fire = False
         self.can_kill = False
         self.cut_trees = False
+        self.float_x = self.rect.x
+        self.float_y = self.rect.y
     def animation(self, direction):
         frame_count = 6
 
@@ -87,6 +89,7 @@ class Player(pygame.sprite.Sprite):
             self.can_kill = True
         elif key[pygame.K_b] and self.wood >= 5:
             self.fire = True
+            
         elif key[pygame.K_j]:
             self.animation3(11)
             self.cut_trees = True
@@ -94,19 +97,25 @@ class Player(pygame.sprite.Sprite):
         else: 
             self.cut_trees = False
             
-        print(self.wood)
-        if self.rect.x < 319:
-            self.rect.x = 319 + 1
-        elif self.rect.x > 830:
-            self.rect.x = 830 - 1
+            
         
-        if self.rect.y < 210:
-            self.rect.y = 210 + 1
-        elif self.rect.y > 744:
-            self.rect.y = 744 -1
+        self.float_x += dx
+        self.float_y += dy
 
-        self.rect.x += dx 
-        self.rect.y += dy 
+        
+        if self.float_x < 319:
+            self.float_x = 319 + 1
+        elif self.float_x > 830:
+            self.float_x = 830 - 1
+
+        if self.float_y < 210:
+            self.float_y = 210 + 1
+        elif self.float_y > 744:
+            self.float_y = 744 - 1
+
+        
+        self.rect.x = int(self.float_x)
+        self.rect.y = int(self.float_y)
         
      
         

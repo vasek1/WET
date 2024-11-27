@@ -186,10 +186,14 @@ while True:
                 temperature_bar.tp += 2
             if elapsed_time - fire_time <= 10000:  
                 player.fire = True
+                if not player.wood_cut and player.wood >= 5:
+                    player.wood -= 5
+                    player.wood_cut = True
             else: 
                 player.fire = False
+                player.wood_cut = False
                 fire_time = elapsed_time
-            
+        
         
         
         if animal.live == True :
@@ -233,9 +237,9 @@ while True:
         
         if player.rect.colliderect(see1_offset) or player.rect.colliderect(see2_offset) or player.rect.colliderect(see3_offset) :
             water_bar.wt = 100
-            player.speed = 0.51
+            player.speed = 0.3
         else :
-                player.speed = 1.3
+                player.speed = 0.9
         
 
         if health_bar.hp <= 0:

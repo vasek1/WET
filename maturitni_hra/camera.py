@@ -13,4 +13,3 @@ class Camera(pygame.sprite.Group):
         self.offset.y = target.rect.centery - self.half_h 
         return (self.offset.x, self.offset.y)
 #přidat zoom
-# přidat abych chodil za stromy ne přes ně

@@ -1,10 +1,13 @@
 NEVIM SI RADY
 přidat zoom
-potřebuji aby se ubíralo pouze 5 dreva a ne vsechno (asi řešení přidat jestli je tlačítko zmáčknuté nebo je držené a změnit to třeba na j_pressed = True)
 
+
+
+Úkoly
+přidat stromy jako objekty a aby mohl těžit pouze v nějakém range od stromu
+zoom 
 
 OTÁZKY
-přidat stromy jako objekty nebo jako vrstvu 
  musíme zeptat proč mi to stromy vykresluje výš kdyz je dávám jako vrstvu a ne tam kde jsem je namaloval
 
 
