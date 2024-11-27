@@ -1,8 +1,8 @@
 import pygame
 from pytmx.util_pygame import load_pygame
-
+from tree import Tree
 class Map:
-     def __init__(self,screen, level_data):
+     def __init__(self,screen, level_data, tree_group):
           self.data = load_pygame(level_data)
           self.screen = screen
           
@@ -14,6 +14,7 @@ class Map:
           self.priroda_layer = self.data.get_layer_by_name('priroda')
           self.stromy_layer = self.data.get_layer_by_name('stromy')
           self.zvirata_layer = self.data.get_layer_by_name('zvirata_plocha')
+          self.tree_group = tree_group
           self.layers = [self.pozadi_layer, self.jezera_layer, self.priroda_layer, self.zvirata_layer,self.more_layer]
           #přidat stromy jako objekty nebo jako vrstvu  musíme poradit proč mi to stromy vykresluje výš kdyz je dávám jako vrstvu a ne tam kde jsem je namaloval
      def draw_background(self, offset):
@@ -37,3 +38,7 @@ class Map:
                 (y * self.data.tileheight) - offset[1],
             ),
         )
+     def create_tree(self):
+        for tree in self.tree:
+            new_tree = Tree(tree.image, tree.width, tree.height, (tree.x, tree.y))
+            self.tree_group.add(new_tree)
