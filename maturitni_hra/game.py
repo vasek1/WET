@@ -48,13 +48,14 @@ see2 = pygame.Rect(898, 155, 100, 110)
 see3 = pygame.Rect(870, 175, 160, 55)  
 animal_area = pygame.Rect(855, 907, 80, 22)
 
-mapa = Map(screen,level_data)
 
+tree_group = pygame.sprite.Group()
 health_bar = bar(1135,10,60,5,0,0,100,0)
 water_bar = bar(1135,25,60,5,0,100,0,0)
 food_bar = bar(1135,40,60,5,100,0,0,0)
 temperature_bar = bar(1135,55,60,5,0,0,0,100)
 
+mapa = Map(screen,level_data)#,tree_group
 
 animal_group = pygame.sprite.Group()
 animal = Animal((800,750))
@@ -126,7 +127,7 @@ while True:
         player.update()
         
         mapa.draw_trees(offset)
-
+        #mapa.create_tree(offset)
         animal_group.update()
         for animal in animal_group:
             animal.draw(screen, offset)
@@ -186,7 +187,7 @@ while True:
                 temperature_bar.tp += 2
             if elapsed_time - fire_time <= 10000:  
                 player.fire = True
-                if not player.wood_cut and player.wood >= 5:
+                if not player.wood_cut and round(player.wood) >= 5:
                     player.wood -= 5
                     player.wood_cut = True
             else: 
