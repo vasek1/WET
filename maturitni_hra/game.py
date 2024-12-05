@@ -49,8 +49,9 @@ see3 = pygame.Rect(870, 175, 160, 55)
 animal_area = pygame.Rect(855, 907, 80, 22)
 tree_group = pygame.sprite.Group()
 
+camera_group = Camera(screen)
 
-mapa = Map(screen,level_data, tree_group)
+mapa = Map(camera_group.internal_surf,level_data, tree_group)
 
 tree_group = pygame.sprite.Group()
 health_bar = bar(1135,10,60,5,0,0,100,0)
@@ -58,14 +59,14 @@ water_bar = bar(1135,25,60,5,0,100,0,0)
 food_bar = bar(1135,40,60,5,100,0,0,0)
 temperature_bar = bar(1135,55,60,5,0,0,0,100)
 
-mapa = Map(screen,level_data)#,tree_group
+
 
 animal_group = pygame.sprite.Group()
 animal = Animal((800,750))
 animal_group.add(animal)
 
-camera_group = Camera(screen)
-player = Player((600,750),camera_group)
+
+player = Player((600,600),camera_group)
 camera_group.add(player)
 
 
@@ -115,6 +116,9 @@ while True:
             Tutorial = False  
 
     elif Game_go == True: 
+        scaled_surf = pygame.transform.scale(camera_group.internal_surf,camera_group.internal_surface_size_vector * camera_group.zoom_scale)
+        scaled_rect = scaled_surf.get_rect(center = (camera_group.half_w,camera_group.half_h))
+        screen.blit(scaled_surf,(0,0))
         elapsed_time = pygame.time.get_ticks()
         elapsed_time_day = pygame.time.get_ticks()  / 600000 #600 000 nastavení dne na 10 minut
 
@@ -124,16 +128,16 @@ while True:
         see3_offset = see3.move(-offset[0],-offset[1])    
         spawn_area_offset = animal_area.move(-offset[0],-offset[1]) 
 
-        mapa.draw_background(offset)
+        mapa.draw_background(camera_group.internal_surf,offset)
 
-        player.draw(screen)
+        player.draw(camera_group.internal_surf)
         player.update()
         
-        mapa.draw_trees(offset)
+        mapa.draw_trees(camera_group.internal_surf,offset)
         #mapa.create_tree(offset)
         animal_group.update()
         for animal in animal_group:
-            animal.draw(screen, offset)
+            animal.draw(camera_group.internal_surf, offset)
 
             if player.can_kill == True:
                  if elapsed_time - kill_time >100:
@@ -161,26 +165,26 @@ while True:
       
         
 
-        screen.blit(see_image,see1_offset)
-        screen.blit(see_image,see2_offset)
-        screen.blit(see_image,see3_offset)
-        screen.blit(animal_area_image,spawn_area_offset)
+        camera_group.internal_surf.blit(see_image,see1_offset)
+        camera_group.internal_surf.blit(see_image,see2_offset)
+        camera_group.internal_surf.blit(see_image,see3_offset)
+        camera_group.internal_surf.blit(animal_area_image,spawn_area_offset)
 
-        screen.blit(under_bar,(1100,0))
-        screen.blit(health,(1120,8))
-        screen.blit(food,(1120,38))
-        screen.blit(water,(1120,23))
-        screen.blit(tmp,(1120,53))
+        camera_group.internal_surf.blit(under_bar,(1100,0))
+        camera_group.internal_surf.blit(health,(1120,8))
+        camera_group.internal_surf.blit(food,(1120,38))
+        camera_group.internal_surf.blit(water,(1120,23))
+        camera_group.internal_surf.blit(tmp,(1120,53))
 
         day_text = font1.render(f"Day: {day}", False, "#000000")
         wood_text = font1.render(f"Wood: {round(player.wood)}", False, "#000000")
-        screen.blit(day_text, (1120, 67))
-        screen.blit(wood_text, (1155, 67))
+        camera_group.internal_surf.blit(day_text, (1120, 67))
+        camera_group.internal_surf.blit(wood_text, (1155, 67))
 
-        health_bar.draw_Healthbar(screen)
-        food_bar.draw_Foodbar(screen)
-        water_bar.draw_Waterbar(screen)
-        temperature_bar.draw_Temperaturebar(screen)
+        health_bar.draw_Healthbar(camera_group.internal_surf)
+        food_bar.draw_Foodbar(camera_group.internal_surf)
+        water_bar.draw_Waterbar(camera_group.internal_surf)
+        temperature_bar.draw_Temperaturebar(camera_group.internal_surf)
 
         
        

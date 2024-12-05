@@ -57,7 +57,7 @@ class Player(pygame.sprite.Sprite):
        
         key = pygame.key.get_pressed()
         if self.fire == False:
-          if not self.cut_trees:
+          if not self.cut_trees and not self.can_kill:
             if key[pygame.K_a]:
                 dx -= self.speed
                 self.animation(2)
@@ -71,7 +71,7 @@ class Player(pygame.sprite.Sprite):
                 dy += self.speed
                 self.animation(3)
         if self.fire == True:
-          if not self.cut_trees:
+          if not self.cut_trees and not self.can_kill:
             if key[pygame.K_a]:
                 dx -= self.speed
                 self.animation(6)
