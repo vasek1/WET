@@ -47,8 +47,9 @@ see1 = pygame.Rect(238, 715, 70, 60)
 see2 = pygame.Rect(898, 155, 100, 110)
 see3 = pygame.Rect(870, 175, 160, 55)  
 animal_area = pygame.Rect(855, 907, 80, 22)
+tree_group = pygame.sprite.Group()
 
-mapa = Map(screen,level_data)
+mapa = Map(screen,level_data, tree_group)
 
 health_bar = bar(1135,10,60,5,0,0,100,0)
 water_bar = bar(1135,25,60,5,0,100,0,0)
