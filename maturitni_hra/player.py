@@ -87,7 +87,7 @@ class Player(pygame.sprite.Sprite):
         if key[pygame.K_k]:
             self.animation2(10)
             self.can_kill = True
-        elif key[pygame.K_b] and self.wood >= 5:
+        elif key[pygame.K_b] and round(self.wood) >= 5:
             self.fire = True
             
         elif key[pygame.K_j]:
