@@ -7,7 +7,8 @@ class Camera(pygame.sprite.Group):
         self.offset = pygame.math.Vector2()
         self.half_w = self.display_surface.get_size()[0] // 2
         self.half_h = self.display_surface.get_size()[1] // 2
-        self.zoom_scale = 5
+        self.zoom_scale = 3
+
 
     
         self.internal_surf_size = (1500,1500)

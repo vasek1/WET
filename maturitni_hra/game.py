@@ -66,7 +66,7 @@ animal = Animal((800,750))
 animal_group.add(animal)
 
 
-player = Player((600,600),camera_group)
+player = Player((600,600))
 camera_group.add(player)
 
 
@@ -170,21 +170,21 @@ while True:
         camera_group.internal_surf.blit(see_image,see3_offset)
         camera_group.internal_surf.blit(animal_area_image,spawn_area_offset)
 
-        camera_group.internal_surf.blit(under_bar,(1100,0))
-        camera_group.internal_surf.blit(health,(1120,8))
-        camera_group.internal_surf.blit(food,(1120,38))
-        camera_group.internal_surf.blit(water,(1120,23))
-        camera_group.internal_surf.blit(tmp,(1120,53))
+        screen.blit(under_bar,(1100,0))
+        screen.blit(health,(1120,8))
+        screen.blit(food,(1120,38))
+        screen.blit(water,(1120,23))
+        screen.blit(tmp,(1120,53))
 
         day_text = font1.render(f"Day: {day}", False, "#000000")
         wood_text = font1.render(f"Wood: {round(player.wood)}", False, "#000000")
-        camera_group.internal_surf.blit(day_text, (1120, 67))
-        camera_group.internal_surf.blit(wood_text, (1155, 67))
+        screen.blit(day_text, (1120, 67))
+        screen.blit(wood_text, (1155, 67))
 
-        health_bar.draw_Healthbar(camera_group.internal_surf)
-        food_bar.draw_Foodbar(camera_group.internal_surf)
-        water_bar.draw_Waterbar(camera_group.internal_surf)
-        temperature_bar.draw_Temperaturebar(camera_group.internal_surf)
+        health_bar.draw_Healthbar(screen)
+        food_bar.draw_Foodbar(screen)
+        water_bar.draw_Waterbar(screen)
+        temperature_bar.draw_Temperaturebar(screen)
 
         
        
