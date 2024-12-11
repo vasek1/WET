@@ -5,7 +5,7 @@ from settings import *
 
 
 class Player(pygame.sprite.Sprite):
-    def __init__(self,pos,camera_group):
+    def __init__(self,pos):
         super().__init__() 
         self.x = 100
         self.y = 200
@@ -14,7 +14,6 @@ class Player(pygame.sprite.Sprite):
         self.speed = 0.8
         self.index = 0
         self.rect = self.image.get_rect(center = pos)
-        self.camera_group = camera_group
         self.wood = 0
         self.fire = False
         self.can_kill = False
