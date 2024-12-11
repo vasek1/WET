@@ -35,10 +35,19 @@ def bye():
 def form():
     if request.method == "POST":
         name = request.form.get("name")
-        input_class = request.form.get("class")
         message = request.form.get("message")
         grade = random.randint(1,5)
-
+        input_class = request.form.get("class")
+        if " " in name:
+            name = name.title()
+        else:
+            name = "error"
+        if len(input_class) >= 3:
+            input_class = "error"
+        else:
+            input_class = request.form.get("class")
+        
+        
         cursor = get_db().cursor()
         cursor.execute(
             "INSERT INTO students(student_name, class, student_message, grade) VALUES (?,?,?,?)", (name,input_class,message, grade)
