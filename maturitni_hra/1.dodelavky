@@ -1,18 +1,7 @@
-NEVIM SI RADY
-přidat zoom
-
 Úkoly
 přidat stromy jako objekty a aby mohl těžit pouze v nějakém range od stromu
-zoom 
-
-OTÁZKY
- musíme zeptat proč mi to stromy vykresluje výš kdyz je dávám jako vrstvu a ne tam kde jsem je namaloval
-
-
-Vyřešeno
-kdyz hrac vejde do vody tak se zpomali vyreseno(player.speed se změní ale vizuální změna tam není žádná ta je jenom kdyz je speed treba 3)
-přidat abych chodil za stromy ne přes ně(zeptat se jestli to stačí)
-musim vyřešit jak se bude přidavat drevo buď když hráč ujde nějakou vzdálenost nebo když bude držet klávesu j tak bude animace sekání do dřeva a bude se přidávat
+pro každý strom přidat do sprite group a pote to resit pomoci spritecollide
+rect obarvit a dát je na jezera a na oblas kde chci zabíjet zvířata
 
 BONUS
 můžu přidat logika když je den dva tak se bude ubírat více jídla, pití a teploty

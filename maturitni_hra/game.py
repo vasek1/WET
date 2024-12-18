@@ -130,7 +130,8 @@ while True:
 
         mapa.draw_background(camera_group.internal_surf,offset)
 
-        player.draw(camera_group.internal_surf)
+        player_offset_pos = (player.rect.x - offset[0], player.rect.y - offset[1]) 
+        camera_group.internal_surf.blit(player.image, player_offset_pos)
         player.update()
         
         mapa.draw_trees(camera_group.internal_surf,offset)
@@ -165,7 +166,7 @@ while True:
       
         
 
-        camera_group.internal_surf.blit(see_image,see1_offset)
+        camera_group.internal_surf.blit((see_image),see1_offset)
         camera_group.internal_surf.blit(see_image,see2_offset)
         camera_group.internal_surf.blit(see_image,see3_offset)
         camera_group.internal_surf.blit(animal_area_image,spawn_area_offset)
