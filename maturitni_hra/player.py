@@ -117,7 +117,7 @@ class Player(pygame.sprite.Sprite):
         self.rect.y = int(self.float_y)
         
      
-       
+
         
     def draw(self, screen):
         screen.blit(self.image, self.rect)

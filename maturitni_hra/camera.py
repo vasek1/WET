@@ -22,5 +22,5 @@ class Camera(pygame.sprite.Group):
     def center_target_camera(self, target):
         self.offset.x = target.rect.centerx - (self.half_w / self.zoom_scale)
         self.offset.y = target.rect.centery - (self.half_h / self.zoom_scale)
-        
         return (self.offset.x, self.offset.y)
+
