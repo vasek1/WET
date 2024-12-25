@@ -9,7 +9,7 @@ from animal import Animal
 from getimg import get_image 
 
 pygame.init()
-font1 = pygame.font.Font(None, 15)
+font1 = pygame.font.Font(None, 20)
 font2 = pygame.font.Font(None, 90)
 font3 = pygame.font.Font(None, 50)
 screen = pygame.display.set_mode((screen_width, screen_height))
@@ -54,10 +54,10 @@ camera_group = Camera(screen)
 mapa = Map(camera_group.internal_surf,level_data, tree_group)
 
 tree_group = pygame.sprite.Group()
-health_bar = bar(1135,10,60,5,0,0,100,0)
-water_bar = bar(1135,25,60,5,0,100,0,0)
-food_bar = bar(1135,40,60,5,100,0,0,0)
-temperature_bar = bar(1135,55,60,5,0,0,0,100)
+health_bar = bar(1080,12,100,10,0,0,100,0)
+water_bar = bar(1080,42,100,10,0,100,0,0)
+food_bar = bar(1080,72,100,10,100,0,0,0)
+temperature_bar = bar(1080,102,100,10,0,0,0,100)
 
 
 
@@ -171,16 +171,16 @@ while True:
         camera_group.internal_surf.blit(see_image,see3_offset)
         camera_group.internal_surf.blit(animal_area_image,spawn_area_offset)
 
-        screen.blit(under_bar,(1100,0))
-        screen.blit(health,(1120,8))
-        screen.blit(food,(1120,38))
-        screen.blit(water,(1120,23))
-        screen.blit(tmp,(1120,53))
+        screen.blit(under_bar,(1030,0))
+        screen.blit(health,(1050,10))
+        screen.blit(food,(1050,70))
+        screen.blit(water,(1050,40))
+        screen.blit(tmp,(1050,100))
 
         day_text = font1.render(f"Day: {day}", False, "#000000")
         wood_text = font1.render(f"Wood: {round(player.wood)}", False, "#000000")
-        screen.blit(day_text, (1120, 67))
-        screen.blit(wood_text, (1155, 67))
+        screen.blit(day_text, (1065, 130))
+        screen.blit(wood_text, (1130, 130))
 
         health_bar.draw_Healthbar(screen)
         food_bar.draw_Foodbar(screen)
