@@ -102,22 +102,22 @@ class Player(pygame.sprite.Sprite):
         self.float_y += dy
 
         
-        if self.float_x < 319:
-            self.float_x = 319 + 1
-        elif self.float_x > 830:
-            self.float_x = 830 - 1
+        if self.float_x < 40:
+            self.float_x = 40 + 1
+        elif self.float_x > 1101:
+            self.float_x = 1101 - 1
 
-        if self.float_y < 210:
-            self.float_y = 210 + 1
-        elif self.float_y > 744:
-            self.float_y = 744 - 1
+        if self.float_y < 20:
+            self.float_y = 20 + 1
+        elif self.float_y > 1115:
+            self.float_y = 1115 - 1
 
         
         self.rect.x = int(self.float_x)
         self.rect.y = int(self.float_y)
         
      
-        
+       
         
     def draw(self, screen):
         screen.blit(self.image, self.rect)

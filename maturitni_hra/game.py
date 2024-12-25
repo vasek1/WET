@@ -130,7 +130,8 @@ while True:
 
         mapa.draw_background(camera_group.internal_surf,offset)
 
-        player.draw(camera_group.internal_surf)
+        player_offset_pos = (player.rect.x - offset[0], player.rect.y - offset[1]) 
+        camera_group.internal_surf.blit(player.image, player_offset_pos)
         player.update()
         
         mapa.draw_trees(camera_group.internal_surf,offset)
@@ -143,11 +144,11 @@ while True:
                  if elapsed_time - kill_time >100:
                      player.can_kill = False
                      kill_time = elapsed_time
-                 if player.rect.colliderect(spawn_area_offset):
+                 if player.rect.colliderect(animal_area):
                         animal.live = False
                         if not animal.live:
                             animal.image = get_image(animal.spritesheet, 5, 5, 30, 30, 1)
-                            if not animal.live and food_bar.fd < 100:
+                            if food_bar.fd < 100:
                                 food_bar.fd = 100
                             if elapsed_time - decrease_fd_wt > 10000:
                                 food_bar.fd -= 20
@@ -155,7 +156,7 @@ while True:
                                 decrease_fd_wt = elapsed_time
                                 if player.fire == False:
                                     temperature_bar.tp -= 20  
-
+     
         if not animal.live and elapsed_time - animal_spawn >20000:
              animal.image = get_image(animal.spritesheet, 0, 0, 30, 30, 1)            
              animal.live = True
@@ -243,7 +244,7 @@ while True:
                  increase_hp = elapsed_time
 
         
-        if player.rect.colliderect(see1_offset) or player.rect.colliderect(see2_offset) or player.rect.colliderect(see3_offset) :
+        if player.rect.colliderect(see1) or player.rect.colliderect(see2) or player.rect.colliderect(see3) :
             water_bar.wt = 100
             player.speed = 0.3
         else :
