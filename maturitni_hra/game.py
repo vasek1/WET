@@ -9,7 +9,7 @@ from animal import Animal
 from getimg import get_image 
 
 pygame.init()
-font1 = pygame.font.Font(None, 15)
+font1 = pygame.font.Font(None, 20)
 font2 = pygame.font.Font(None, 90)
 font3 = pygame.font.Font(None, 50)
 screen = pygame.display.set_mode((screen_width, screen_height))
@@ -54,10 +54,10 @@ camera_group = Camera(screen)
 mapa = Map(camera_group.internal_surf,level_data, tree_group)
 
 tree_group = pygame.sprite.Group()
-health_bar = bar(1135,10,60,5,0,0,100,0)
-water_bar = bar(1135,25,60,5,0,100,0,0)
-food_bar = bar(1135,40,60,5,100,0,0,0)
-temperature_bar = bar(1135,55,60,5,0,0,0,100)
+health_bar = bar(1080,12,100,10,0,0,100,0)
+water_bar = bar(1080,42,100,10,0,100,0,0)
+food_bar = bar(1080,72,100,10,100,0,0,0)
+temperature_bar = bar(1080,102,100,10,0,0,0,100)
 
 
 
@@ -144,11 +144,11 @@ while True:
                  if elapsed_time - kill_time >100:
                      player.can_kill = False
                      kill_time = elapsed_time
-                 if player.rect.colliderect(spawn_area_offset):
+                 if player.rect.colliderect(animal_area):
                         animal.live = False
                         if not animal.live:
                             animal.image = get_image(animal.spritesheet, 5, 5, 30, 30, 1)
-                            if not animal.live and food_bar.fd < 100:
+                            if food_bar.fd < 100:
                                 food_bar.fd = 100
                             if elapsed_time - decrease_fd_wt > 10000:
                                 food_bar.fd -= 20
@@ -156,7 +156,7 @@ while True:
                                 decrease_fd_wt = elapsed_time
                                 if player.fire == False:
                                     temperature_bar.tp -= 20  
-
+     
         if not animal.live and elapsed_time - animal_spawn >20000:
              animal.image = get_image(animal.spritesheet, 0, 0, 30, 30, 1)            
              animal.live = True
@@ -166,21 +166,21 @@ while True:
       
         
 
-        camera_group.internal_surf.blit((see_image),see1_offset)
+        camera_group.internal_surf.blit(see_image,see1_offset)
         camera_group.internal_surf.blit(see_image,see2_offset)
         camera_group.internal_surf.blit(see_image,see3_offset)
         camera_group.internal_surf.blit(animal_area_image,spawn_area_offset)
 
-        screen.blit(under_bar,(1100,0))
-        screen.blit(health,(1120,8))
-        screen.blit(food,(1120,38))
-        screen.blit(water,(1120,23))
-        screen.blit(tmp,(1120,53))
+        screen.blit(under_bar,(1030,0))
+        screen.blit(health,(1050,10))
+        screen.blit(food,(1050,70))
+        screen.blit(water,(1050,40))
+        screen.blit(tmp,(1050,100))
 
         day_text = font1.render(f"Day: {day}", False, "#000000")
         wood_text = font1.render(f"Wood: {round(player.wood)}", False, "#000000")
-        screen.blit(day_text, (1120, 67))
-        screen.blit(wood_text, (1155, 67))
+        screen.blit(day_text, (1065, 130))
+        screen.blit(wood_text, (1130, 130))
 
         health_bar.draw_Healthbar(screen)
         food_bar.draw_Foodbar(screen)
@@ -244,7 +244,7 @@ while True:
                  increase_hp = elapsed_time
 
         
-        if player.rect.colliderect(see1_offset) or player.rect.colliderect(see2_offset) or player.rect.colliderect(see3_offset) :
+        if player.rect.colliderect(see1) or player.rect.colliderect(see2) or player.rect.colliderect(see3) :
             water_bar.wt = 100
             player.speed = 0.3
         else :
