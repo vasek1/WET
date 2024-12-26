@@ -32,6 +32,7 @@ see_image = pygame.image.load("image/other/see1.png")
 table_image = pygame.image.load("image/gameover/table_text.png")
 level_data = ("image/map/mapa.tmx")
 animal_area_image = pygame.image.load("image/other/animal_area.png")
+frame_image = pygame.image.load("image/bars/frame.png")
 
 tutorial_button = button.Button(700,690, tutorial_image,width1=46,height1=22,scale= 5)
 start_button = button.Button(450,320, start_image,width1=46,height1=22,scale=  7)
@@ -43,8 +44,8 @@ play_again_button = button.Button(385,450,play_again_image,width1=92,height1=22,
 exit3_button = button.Button(490,585, exit_image, width1=46,height1=22,scale= 5)
 play_again2_button = button.Button(370,470,play_again_image,width1=92,height1=22,scale= 5)
 
-see1 = pygame.Rect(238, 715, 70, 60)
-see2 = pygame.Rect(898, 155, 100, 110)
+see1 = pygame.Rect(238, 715, 65, 55)
+see2 = pygame.Rect(898, 155, 100, 105)
 see3 = pygame.Rect(870, 175, 160, 55)  
 animal_area = pygame.Rect(855, 907, 80, 22)
 tree_group = pygame.sprite.Group()
@@ -148,16 +149,11 @@ while True:
                         animal.live = False
                         if not animal.live:
                             animal.image = get_image(animal.spritesheet, 5, 5, 30, 30, 1)
-                            if food_bar.fd < 100:
+                            if food_bar.fd < 100 and not animal.live:
                                 food_bar.fd = 100
-                            if elapsed_time - decrease_fd_wt > 10000:
-                                food_bar.fd -= 20
-                                water_bar.wt -= 20
-                                decrease_fd_wt = elapsed_time
-                                if player.fire == False:
-                                    temperature_bar.tp -= 20  
+        
      
-        if not animal.live and elapsed_time - animal_spawn >20000:
+        if not animal.live and elapsed_time - animal_spawn >200000:
              animal.image = get_image(animal.spritesheet, 0, 0, 30, 30, 1)            
              animal.live = True
              animal_spawn = elapsed_time
@@ -177,8 +173,9 @@ while True:
         screen.blit(water,(1050,40))
         screen.blit(tmp,(1050,100))
 
-        day_text = font1.render(f"Day: {day}", False, "#000000")
-        wood_text = font1.render(f"Wood: {round(player.wood)}", False, "#000000")
+        
+        day_text = font1.render(f"DAY: {day}", False, "#000000")
+        wood_text = font1.render(f"WOOD: {round(player.wood)}", False, "#000000")
         screen.blit(day_text, (1065, 130))
         screen.blit(wood_text, (1130, 130))
 
@@ -187,7 +184,11 @@ while True:
         water_bar.draw_Waterbar(screen)
         temperature_bar.draw_Temperaturebar(screen)
 
-        
+        screen.blit(frame_image,(1080,12))
+        screen.blit(frame_image,(1080,42))
+        screen.blit(frame_image,(1080,72))
+        screen.blit(frame_image,(1080,102))
+
        
         
         if player.fire == True:
@@ -205,8 +206,8 @@ while True:
         
         
         
-        if animal.live == True :
-            if elapsed_time - decrease_fd_wt > 10000:
+      
+        if elapsed_time - decrease_fd_wt > 10000:
                 water_bar.wt -= 20
                 food_bar.fd -= 10
                 decrease_fd_wt = elapsed_time

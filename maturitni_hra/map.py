@@ -18,7 +18,7 @@ class Map:
           self.tree_group = tree_group
           self.layers = [self.pozadi_layer, self.jezera_layer, self.priroda_layer, self.zvirata_layer,self.more_layer]
           
-          #přidat stromy jako objekty nebo jako vrstvu  musíme poradit proč mi to stromy vykresluje výš kdyz je dávám jako vrstvu a ne tam kde jsem je namaloval
+         
           self.create_tree()
      def draw_background(self,internal_surf, offset):
         for layer in self.layers:
@@ -30,7 +30,7 @@ class Map:
                         (y * self.data.tileheight) - offset[1] ,
                     ),
                 )
-        #self.camera.internal_surf.blit(self.background, (0, 0))
+        
         
      def draw_trees(self,internal_surf,offset):
         for x, y, image in self.stromy_layer.tiles():
