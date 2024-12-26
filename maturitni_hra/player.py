@@ -18,6 +18,7 @@ class Player(pygame.sprite.Sprite):
         self.fire = False
         self.can_kill = False
         self.cut_trees = False
+        self.cutting = False
         self.float_x = self.rect.x
         self.float_y = self.rect.y
     def animation(self, direction):
@@ -51,12 +52,19 @@ class Player(pygame.sprite.Sprite):
     
         
     def update(self):
-        dx = 0
-        dy = 0
+     dx = 0
+     dy = 0
        
-        key = pygame.key.get_pressed()
+     key = pygame.key.get_pressed()
+     if self.cut_trees == True:    
+           if key[pygame.K_j]:
+                self.animation3(11)
+                self.wood += 0.01
+                self.cutting = True
+           else:
+               self.cutting = False
+     if not self.cutting :
         if self.fire == False:
-          if not self.cut_trees and not self.can_kill:
             if key[pygame.K_a]:
                 dx -= self.speed
                 self.animation(2)
@@ -70,7 +78,6 @@ class Player(pygame.sprite.Sprite):
                 dy += self.speed
                 self.animation(3)
         if self.fire == True:
-          if not self.cut_trees and not self.can_kill:
             if key[pygame.K_a]:
                 dx -= self.speed
                 self.animation(6)
@@ -88,13 +95,8 @@ class Player(pygame.sprite.Sprite):
             self.can_kill = True
         elif key[pygame.K_b] and round(self.wood) >= 5:
             self.fire = True
-            
-        elif key[pygame.K_j]:
-            self.animation3(11)
-            self.cut_trees = True
-            self.wood += 0.01
-        else: 
-            self.cut_trees = False
+        
+         
             
             
         

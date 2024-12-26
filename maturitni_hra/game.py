@@ -136,7 +136,8 @@ while True:
         player.update()
         
         mapa.draw_trees(camera_group.internal_surf,offset)
-        #mapa.create_tree(offset)
+        #mapa.create_tree()
+        
         animal_group.update()
         for animal in animal_group:
             animal.draw(camera_group.internal_surf, offset)
@@ -159,7 +160,7 @@ while True:
              animal_spawn = elapsed_time
                                 
                
-      
+        
         
 
         camera_group.internal_surf.blit(see_image,see1_offset)
@@ -251,7 +252,13 @@ while True:
         else :
                 player.speed = 0.9
         
-
+        collision = pygame.sprite.spritecollide(player, mapa.tree_group, False)
+        if collision:
+            player.cut_trees = True
+            print("collide")
+        else:
+            player.cut_trees = False
+            print("not collide")
         if health_bar.hp <= 0:
          game_over =True
          Game_go = False

@@ -31,25 +31,34 @@ class Map:
                     ),
                 )
         
-        
-     def draw_trees(self,internal_surf,offset):
-        for x, y, image in self.stromy_layer.tiles():
-            internal_surf.blit(
-            image,
-            (
-                (x * self.data.tilewidth) - offset[0],
-                (y * self.data.tileheight) - offset[1],
-            ),
-        )
-
      def create_tree(self):
         for tree in self.tree:
-            new_tree = Tree(tree.image, tree.width, tree.height, (tree.x, tree.y))
+            new_tree = Tree(tree.image, tree.width, tree.height,(tree.x , tree.y,))
             self.tree_group.add(new_tree)
+  
+     def draw_trees(self,internal_surf,offset):
+        for tree in self.tree_group:
+         internal_surf.blit(
+            tree.image,
+            (
+                tree.rect.x - offset[0],
+                tree.rect.y - offset[1],
+            ),
+        )
+     #def draw_trees(self,internal_surf,offset):
+      #  for x, y, image in self.stromy_layer.tiles():
+       #     internal_surf.blit(
+        #    image,
+         #   (
+          #      (x * self.data.tilewidth) - offset[0],
+           #     (y * self.data.tileheight) - offset[1],
+            #),
+        #)
+
+     #def create_tree(self):
+      #  for tree in self.tree:
+       #     new_tree = Tree(tree.image, tree.width, tree.height, (tree.x, tree.y))
+        #    self.tree_group.add(new_tree)
         
 
-     #def create_tree(self, offset):
-     #   for tree in self.tree:
-      #      new_tree = Tree(tree.image, tree.width, tree.height, (tree.x, tree.y))
-       #     self.tree_group.add(new_tree)
-
+   
