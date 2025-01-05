@@ -154,7 +154,7 @@ while True:
                                 food_bar.fd = 100
         
      
-        if not animal.live and elapsed_time - animal_spawn >200000:
+        if not animal.live and elapsed_time - animal_spawn >20000:
              animal.image = get_image(animal.spritesheet, 0, 0, 30, 30, 1)            
              animal.live = True
              animal_spawn = elapsed_time

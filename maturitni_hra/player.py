@@ -61,7 +61,7 @@ class Player(pygame.sprite.Sprite):
                 self.animation3(11)
                 self.wood += 0.005
                 self.cutting = True
-                print(self.wood)
+                
            else:
                self.cutting = False
      if not self.cutting :
