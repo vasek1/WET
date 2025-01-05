@@ -259,6 +259,7 @@ while True:
         else:
             player.cut_trees = False
             print("not collide")
+            
         if health_bar.hp <= 0:
          game_over =True
          Game_go = False

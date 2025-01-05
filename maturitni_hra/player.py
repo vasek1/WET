@@ -59,8 +59,9 @@ class Player(pygame.sprite.Sprite):
      if self.cut_trees == True:    
            if key[pygame.K_j]:
                 self.animation3(11)
-                self.wood += 0.01
+                self.wood += 0.005
                 self.cutting = True
+                print(self.wood)
            else:
                self.cutting = False
      if not self.cutting :
