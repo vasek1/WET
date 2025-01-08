@@ -88,6 +88,22 @@ Tutorial = False
 Game_go = False
 game_over = False
 game_win = False
+def reset_game():
+    global start, Tutorial, Game_go, health_bar, water_bar, food_bar, temperature_bar, day, elapsed_time_day, player, animal
+    start = True
+    Tutorial = False
+    Game_go = False
+    health_bar.hp = 100
+    water_bar.wt = 100
+    food_bar.fd = 100
+    temperature_bar.tp = 100
+    day = 0
+    elapsed_time_day = 0
+    player.rect.x = 600
+    player.rect.y = 750
+    animal.live = True
+    player.wood = 0
+    
 while True:
 
     for event in pygame.event.get():
@@ -121,7 +137,7 @@ while True:
         scaled_rect = scaled_surf.get_rect(center = (camera_group.half_w,camera_group.half_h))
         screen.blit(scaled_surf,(0,0))
         elapsed_time = pygame.time.get_ticks()
-        elapsed_time_day = pygame.time.get_ticks()  / 600000 #600 000 nastavení dne na 10 minut
+        elapsed_time_day = pygame.time.get_ticks()  / 300000 #600 000 nastavení dne na 10 minut
 
         offset = camera_group.center_target_camera(player)
         see1_offset = see1.move(-offset[0],-offset[1])
@@ -213,14 +229,14 @@ while True:
                 food_bar.fd -= 10
                 decrease_fd_wt = elapsed_time
                 if player.fire == False:
-                    temperature_bar.tp -= 8             
+                    temperature_bar.tp -= 8    
             
-        if food_bar.fd == 0 or water_bar.wt == 0 or temperature_bar.tp == 0:
+        if food_bar.fd <= 0 or water_bar.wt <= 0 or temperature_bar.tp <= 0:
           if health_bar.hp > 0 and elapsed_time - decrease_hp > 1000:
                 health_bar.hp -= 5
                 decrease_hp = elapsed_time
 
-        if food_bar.fd == 0 and water_bar.wt == 0 and temperature_bar.tp == 0:
+        if food_bar.fd <= 0 and water_bar.wt <= 0 and temperature_bar.tp <= 0:
                 health_bar.hp = 0
                 
 
@@ -281,20 +297,9 @@ while True:
         play_again_button.draw(screen)
         exit2_button.draw(screen) 
         if play_again_button.click(event):
-            start = True
+            reset_game()
             game_over = False
-            Tutorial = False
-            Game_go = False
-            health_bar.hp = 100
-            water_bar.wt = 100
-            food_bar.fd = 100
-            temperature_bar.tp = 100
-            day = 0
-            elapsed_time_day = 0
-            player.rect.x = 600
-            player.rect.y = 750
-            animal.live = True
-            player.wood = 0
+            
         elif exit2_button.click(event):
             pygame.quit()
     if game_win == True:
@@ -303,20 +308,9 @@ while True:
         play_again2_button.draw(screen)
         exit3_button.draw(screen)
         if play_again2_button.click(event):
-            start = True
+            
             game_win = False
-            Tutorial = False
-            Game_go = False
-            health_bar.hp = 100
-            water_bar.wt = 100
-            food_bar.fd = 100
-            temperature_bar.tp = 100
-            day = 0
-            elapsed_time_day = 0
-            player.rect.x = 600
-            player.rect.y = 750
-            animal.live = True
-            player.wood = 0
+            reset_game()
         elif exit3_button.click(event):
             pygame.quit()
     pygame.display.update() 
