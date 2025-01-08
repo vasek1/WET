@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Christmas</h1>
+    <p class="output"></p>
+    
+    <script>
+        
+        async function fetchData(url) {
+            try{
+                const response = await fetch(url)
+                if (response.ok !== true){
+                    throw new Error("not working")
+                }
+                return await response.json()
+
+            }catch (err) {
+                console.log("Error", err)
+            }
+        }
+        async function displayData(url) {
+            const chrjokes = await fetchData(url)
+            if (chrjokes){
+                const randomnum = Math.floor(Math.random()* chrjokes.length)
+                document.querySelector(".output").innerText = chrjokes[randomnum]["question"] + "" +chrjokes[randomnum]["answer"]
+            }
+        }
+        displayData("https://christmasjoy.dev/api/jokes")
+    </script>
+</body>
+</html>
