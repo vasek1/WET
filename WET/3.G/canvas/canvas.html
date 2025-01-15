@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.3/p5.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.3/addons/p5.sound.min.js"></script>
+    <link rel="stylesheet" type="text/css" href="style.css">
+    <meta charset="utf-8" />
+
+  </head>
+  <body>
+    <main>
+    </main>
+    <script src="sketch.js">
+        let x = 30
+        let y = 30
+        let speed =5
+        let r =255
+        let g =255
+        let b =255
+        function setup() {
+          createCanvas(400, 400);
+        }
+
+        function draw() {   
+         background(220)
+         fill(r,g,b)
+         noStroke()
+          x += speed
+        if(x>width|| x<0){
+    speed *=-1
+  r = random(0,255)
+  g= random(0,255)
+  b= random(0,255)
+  }
+         ellipse(x,y,50)
+        }
+    </script>
+  </body>
+</html>

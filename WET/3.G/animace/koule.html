@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="cs">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+        <style>
+            .wrapper {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                flex-direction: row;
+            }
+            .matraca {
+                border: solid black;
+                width: 2000px;
+                position: absolute;
+                bottom: 50px;
+            }
+            .gule1 {
+                background-color: red;
+                height: 100px;
+                width: 100px;
+                border-radius: 50%;
+                display: inline-block;
+                margin: 10px;
+                animation: hopsa 2s ease-in infinite alternate;
+            }
+            .gule2 {
+                background-color: purple;
+                height: 100px;
+                width: 100px;
+                border-radius: 50%;
+                display: inline-block;
+                margin: 10px;
+                animation: hopsa 2s ease-in 0.14564616s infinite alternate;
+            }
+            .gule3 {
+                background-color: blue;
+                height: 100px;
+                width: 100px;
+                border-radius: 50%;
+                margin: 10px;
+                animation: hopsa 2s ease-in 0.475154894627s infinite alternate;
+                display: inline-block;
+            }
+            .gule4 {
+                background-color: yellow;
+                height: 100px;
+                width: 100px;
+                border-radius: 50%;
+                margin: 10px;
+                animation: hopsa 2s ease-in 0.941691516134s infinite alternate;
+                display: inline-block;
+            }
+            .gule5 {
+                background-color: green;
+                height: 100px;
+                width: 100px;
+                border-radius: 50%;
+                margin: 10px;
+                animation: hopsa 2s ease-in 0.623124745614478456179s infinite
+                    alternate;
+                display: inline-block;
+            }
+            @keyframes hopsa {
+                100% {
+                    translate: 0px 900px;
+                }
+            }
+        </style>
+    </head>
+    <body>
+        <div class="wrapper">
+            <div class="gule1"></div>
+            <div class="gule2"></div>
+            <div class="gule3"></div>
+            <div class="gule4"></div>
+            <div class="gule5"></div>
+        </div>
+        <div class="matraca"></div>
+    </body>
+</html>

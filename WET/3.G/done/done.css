@@ -1,0 +1,29 @@
+@import url("https://fonts.googleapis.com/css2?family=Kanit:wght@100&display=swap");
+
+body {
+    text-align: center;
+}
+.nadpis {
+    color: aqua;
+    font-family: "Kanit", sans-serif;
+}
+#slunce{
+    position: relative;
+    right: -800px;
+    height: 100px;
+    text-align: right;
+    display: inline;
+}
+.nadpis2{
+    color: aqua;
+    font-family: "Kanit", sans-serif;
+    display: none;
+}
+#ucebnice{
+
+height: 100px;
+position: absolute;
+right: 5px;
+text-align: right;
+display: none;
+}

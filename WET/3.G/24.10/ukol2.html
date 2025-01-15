@@ -1,0 +1,56 @@
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Document</title>
+    </head>
+    <body>
+
+        <div class="zarovnání">
+            <h1 class="nadpis" >Dark mode</h1>
+            <h2 class="text1">Batmene zhasni svetlo ted ted ted </h2>
+            <button class="tlacitko">nic nedělám</button>
+        </div>
+
+        <img class="mesic"src= "https://pngfre.com/wp-content/uploads/moon-58-1024x1024.png"alt=""/>
+        <style>
+ @import url('https://fonts.googleapis.com/css2?family=Open+Sans&family=Roboto:wght@300&display=swap');
+
+body{
+   background-color:#0078D7; 
+}
+.zarovnání{
+text-align: center;
+position: relative;
+}
+.nadpis{
+    font-family: 'Roboto', sans-serif;
+}
+.text1{
+    font-family: 'Open Sans', sans-serif;
+     }
+    .mesic{
+        height: 200px;
+        position: relative;
+       text-align: left; 
+        display: inline;
+        top: -150px;
+    }
+   
+        </style>
+        
+    </body>
+
+</html>
+<script >
+let nadpis = document.querySelector(".nadpis")
+let mesic = document.querySelector(".mesic")
+let text1 = document.querySelector(".text1")
+    
+ mesic.addEventListener("click", zmenNadpis)
+    
+    function zmenNadpis() {
+        document.body.style.backgroundColor = "#002050";
+        nadpis.style.color = "white";
+        text1.style.color = "white";
+    }</script>

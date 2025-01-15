@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title> 
+</head>
+<body>
+    <p class="user"></p>
+    <img class ="flag" src="" alt="">
+    <img class ="person" src="" alt="">
+    <script>
+        const jmeno_api = "https://randomuser.me/api/"
+        const vlajka_api = "https://restcountries.com/v3.1/name/"
+        const user = document.querySelector(".user")
+        const flag = document.querySelector(".flag")
+        const person = document.querySelector(".person")
+        async function fetchData(url) {
+            try{
+                const response = await fetch(url)
+                if (!response.ok){
+                    throw new Error
+                }
+                return await response.json()
+            } catch(error){
+                console.error("chyba při zpracování dat",error)
+            }
+        }
+        async function processData() {
+            const userData = await fetchData(jmeno_api)
+            
+           if (userData){
+            user.innerText = userData["results"][0]["name"]["first"] +" "+ userData["results"][0]["name"]["last"]
+        }
+            const flagData = await fetchData(`https://restcountries.com/v3.1/name/${userData["results"][0]["location"]["country"]}`)
+           
+           if (flagData){
+            flag.src = flagData[0]["flags"]["png"]
+           }
+           const personFoto = await fetchData(jmeno_api)
+           if (personFoto){
+            person.src = personFoto ["results"][0]["picture"]["large"]
+           
+           }
+        }
+        
+       
+        processData()
+
+    </script>
+</body>
+</html>
