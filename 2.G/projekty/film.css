@@ -1,0 +1,27 @@
+body{
+
+}
+.images {
+    height: 300px;
+    width: auto;
+    border: 5px solid goldenrod;
+    border-radius: 5%;
+}
+.heading{
+    color:goldenrod
+}
+li{
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    color: gray;
+
+}
+.buttons{
+    background-color: goldenrod;
+    color: honeydew;
+    border-color: goldenrod;
+}
+#comment{
+    height: 150px;
+    width: 300px;
+    resize: none;
+}

@@ -1,0 +1,98 @@
+@import url('https://fonts.googleapis.com/css2?family=Merriweather&family=Montserrat&family=Nunito&family=Oxygen&family=Pacifico&family=Poppins&family=Roboto&display=swap');
+
+* {
+    font-family: "Roboto";
+    box-sizing: ;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+}
+
+.cont {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #333;
+    flex-direction: column;
+    position: relative;
+}
+
+.cont * {
+    margin-bottom: 5px;
+}
+
+.cont div {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+
+
+
+.text {
+    color: coral;
+    font-size: 1.7em;
+    margin-bottom: 50px;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+    text-align: center;
+}
+
+
+.tlacitko {
+    background-color: rgb(11, 159, 110);
+    border: 2px solid white;
+    color: white;
+    border-radius: 1000px;
+    padding: 7px 15px;
+    cursor: pointer;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+textarea {
+    font-size: 1.1em;
+    width: 40px;
+    height: 30px;
+    border: 2px solid rgb(11, 159, 110);
+    border-radius: 5%;
+    resize: none;
+}
+
+#knp {
+    display: none;
+}
+
+
+.goto {
+    position: absolute;
+    font-size: 0.65rem;
+    top: 3%;
+    background-color: coral;
+    border: 2px solid black;
+    color: black;
+    border-radius: 1000px;
+    padding: 7px 15px;
+    cursor: pointer;
+    -webkit-user-select: none; /* Safari */
+    -ms-user-select: none; /* IE 10 and IE 11 */
+    user-select: none; /* Standard syntax */
+}
+
+
+#goto-knp {
+    right: 2%;
+}
+
+#goto-hadej {
+    left: 2%;
+}
