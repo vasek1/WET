@@ -242,7 +242,7 @@ while True:
 
         
         if food_bar.fd > 75 and water_bar.wt > 75 and temperature_bar.tp > 75:
-            if health_bar.hp < 100 and elapsed_time - increase_hp > 1000:
+            if health_bar.hp < 90 and elapsed_time - increase_hp > 1000:
                  health_bar.hp += 10   
                  increase_hp = elapsed_time
         elif water_bar.wt > 75:
