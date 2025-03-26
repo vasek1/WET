@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="../static/barevny.css">
+</head>
+<body>
+    <h1>Registrace</h1>
+    <form method="get">
+        <label for="name">Name:</label>
+        <input type="text"name="jmeno"><br>     
+        <label for="cecka">Počet céček: </label>
+        <input type="number" name="pocet_cecek"><br>
+        <button class="tlacitko">KLIKNI</button>
+        <!-- pridat metodu formuláři a vzdyt pridat name k inputum -->
+        <p>Vítej v klubu {{jinja_name}}</p>
+    </form>
+</body>
+</html>
