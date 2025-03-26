@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1{
+            color: aqua;
+        }
+        .rozlouc{
+            color:blueviolet
+        }
+        #papito{
+            color: beige;
+            transform: rotateX('90');
+        }
+
+    </style>
+</head>
+<body>
+    <h1>Dobrý den</h1>
+    <h2 class ="rozlouc" id ="papito">Papa</h2>
+    <h3 class="mensi-podnadpis">Čačaouuu</h3>
+    <input type="radio"name="options">Možnost 1   
+    <input type="radio"name="options">Možnost 2
+    <input type="radio" name="options"> Možnost 3
+    <span>Ahojky</span>
+    <!-- name pomáhá propojit všechny tlačítka pote je zakliknutelné pouze jedno 
+      prvky se vypisují do řádku blocku nebo inline(může být více na jednom řádku) 
+      css:display ="inline" display = "block"
+      u css znát display, position, margin, padding, borrder, flexbox, transform rotate, transmit
+      znat form button,input
+        link propojení s css externím souborem
+       -->
+    <script>
+        console.log("Ahoj")
+
+        const h3 = document.querySelector(".mensi-podnadpis")
+        h3.style.color = "deepskyblue"
+    </script>
+</body>
+</html>
