@@ -10,8 +10,9 @@ def registrace():
         name = request.args.get("jmeno")
         cecka = request.args.get("pocet_cecek")
        
-        if cecka > 17:
-            return render_template("registrace.html", jinja_name = name)
+        if cecka != "" and cecka != None:
+            if int(cecka) > 17:
+                return render_template("registrace.html", jinja_name = name)
         return render_template("registrace.html")
             
 if __name__ == "__main__": # zapínání aplikace 
