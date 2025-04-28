@@ -10,9 +10,6 @@ class Camera(pygame.sprite.Group):
         self.zoom_scale = 3
         
         
-
-
-    
         self.internal_surf_size = (500,300)
         self.internal_surf = pygame.Surface(self.internal_surf_size, pygame.SRCALPHA)
         self.internal_rect = self.internal_surf.get_rect(center = (self.half_w,self.half_h))

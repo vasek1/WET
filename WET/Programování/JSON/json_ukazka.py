@@ -8,6 +8,6 @@ filmy = {"komedie":"Tropická bouře",
 with open("data.json", mode="w") as soubor:
     json.dump(filmy,soubor, indent=4, ensure_ascii = False)
 
-with open("data.json", mode="r") as soubor:
+with open("data.json", mode="r") as soubor: # otevře soubor a poté ho automaticky zavře
     nactenadata = json.load(soubor)
 print(nactenadata)

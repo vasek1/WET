@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title> 
+</head>
+<body>
+    <script>
+        const mojeApi = "https://catfact.ninja/fact"
+        async function ziskejData(adresa){ 
+        // popsat tuto funkci nemusí si ji člověk pamatovat async a await popsat
+        // pokud mám něco asynchroního musím na to počkat await 
+        // fetch bere data, data vrátí v jsonu aby to mohl javascript číst
+            try{
+                const odpoved = await fetch(adresa)
+                if (!odpoved.ok){
+                 throw new Error("něco je špatně")
+                }
+                return await odpoved.json()
+            } catch(error){
+                console.error("chyba při zpracování dat",error)
+            }
+        }
+        async function zobrazData() {
+            const kociciFakta = await ziskejData(mojeApi)
+            if (kociciFakta){
+                console.log(kociciFakta["fact"])
+            }
+        }
+        zobrazData()
+    </script>
+</body>
+</html>
